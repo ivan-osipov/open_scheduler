@@ -6,8 +6,6 @@ import org.pyjjs.scheduler.core.actors.resource.supervisor.messages.ResourceInit
 
 public class ResourceInitBehaviour extends Behaviour<ResourceActorState, ResourceInitMessage> {
 
-    private static final ResourceInitBehaviour INSTANCE = new ResourceInitBehaviour();
-
     @Override
     protected void perform(ResourceInitMessage message) {
         ResourceActorState resourceActorState = getActorState();
@@ -19,10 +17,6 @@ public class ResourceInitBehaviour extends Behaviour<ResourceActorState, Resourc
     @Override
     protected Class<ResourceInitMessage> processMessage() {
         return ResourceInitMessage.class;
-    }
-
-    public static ResourceInitBehaviour get() {
-        return INSTANCE;
     }
 
 }

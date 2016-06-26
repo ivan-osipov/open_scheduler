@@ -11,8 +11,6 @@ import org.pyjjs.scheduler.core.model.primary.Resource;
 
 public class CreateResourceBehaviour extends Behaviour<ResourceSupervisorState, EntityCreatedMessage> {
 
-    private static final CreateResourceBehaviour INSTANCE = new CreateResourceBehaviour();
-
     @Override
     protected void perform(EntityCreatedMessage message) {
         Resource resource = (Resource) message.getEntity();
@@ -32,9 +30,5 @@ public class CreateResourceBehaviour extends Behaviour<ResourceSupervisorState, 
     @Override
     protected Class<EntityCreatedMessage> processMessage() {
         return EntityCreatedMessage.class;
-    }
-
-    public static CreateResourceBehaviour get() {
-        return INSTANCE;
     }
 }

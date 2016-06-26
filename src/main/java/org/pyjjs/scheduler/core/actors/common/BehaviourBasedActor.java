@@ -8,8 +8,18 @@ public abstract class BehaviourBasedActor<T extends ActorState> extends StateOri
 
     private Map<Class<? extends Message>, Behaviour<T, ? extends Message>> behaviours = Maps.newHashMap();
 
-    protected void addBehaviour(Behaviour<T, ? extends Message> behaviour) {
+    private void addBehaviour(Behaviour<T, ? extends Message> behaviour) {
         behaviours.put(behaviour.processMessage(), behaviour);
+    }
+
+    protected <B extends Behaviour<T, ? extends Message>> void addBehaviour(Class<B> behaviourClass) {
+        Behaviour<T, ? extends Message> behaviour;
+        try {
+            behaviour = behaviourClass.newInstance();
+            addBehaviour(behaviour);
+        } catch (Exception e) {
+            LOG.error("Developer error:", e);
+        }
     }
 
     @Override

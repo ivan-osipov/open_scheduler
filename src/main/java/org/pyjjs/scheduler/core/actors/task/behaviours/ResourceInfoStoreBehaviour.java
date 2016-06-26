@@ -5,7 +5,6 @@ import org.pyjjs.scheduler.core.actors.resource.messages.ResourcePriceInfoMessag
 import org.pyjjs.scheduler.core.actors.task.TaskActorState;
 
 public class ResourceInfoStoreBehaviour extends Behaviour<TaskActorState, ResourcePriceInfoMessage> {
-    private static final ResourceInfoStoreBehaviour INSTANCE = new ResourceInfoStoreBehaviour();
     @Override
     protected void perform(ResourcePriceInfoMessage message) {
         System.out.println(message.getSender() + " предлагает разместиться за " + message.getPlacingPrice() + "$");
@@ -16,7 +15,4 @@ public class ResourceInfoStoreBehaviour extends Behaviour<TaskActorState, Resour
         return ResourcePriceInfoMessage.class;
     }
 
-    public static ResourceInfoStoreBehaviour get() {
-        return INSTANCE;
-    }
 }

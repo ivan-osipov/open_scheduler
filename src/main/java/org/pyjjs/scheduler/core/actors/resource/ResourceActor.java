@@ -24,7 +24,7 @@ public class ResourceActor extends BehaviourBasedActor<ResourceActorState> imple
     }
 
     private void fillBehaviours() {
-        addBehaviour(ResourceInitBehaviour.get());
-        addBehaviour(FindPlacementBehaviour.get());
+        addBehaviour(ResourceInitBehaviour.class);
+        addBehaviour(FindPlacementBehaviour.class);
     }
 }

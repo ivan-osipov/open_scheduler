@@ -19,7 +19,7 @@ public class ModificationController extends BehaviourBasedActor<ModificationCont
     }
 
     private void fillBehaviours() {
-        addBehaviour(DataSourceChangeBehaviour.get());
+        addBehaviour(DataSourceChangeBehaviour.class);
     }
 
     @Override

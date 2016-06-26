@@ -15,6 +15,6 @@ public class ResourceSupervisor extends BehaviourBasedActor<ResourceSupervisorSt
     }
 
     private void fillBehaviours() {
-        addBehaviour(CreateResourceBehaviour.get());
+        addBehaviour(CreateResourceBehaviour.class);
     }
 }

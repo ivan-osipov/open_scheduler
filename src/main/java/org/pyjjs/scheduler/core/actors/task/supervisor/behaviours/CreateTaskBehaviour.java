@@ -13,8 +13,6 @@ import org.pyjjs.scheduler.core.model.primary.Task;
 
 public class CreateTaskBehaviour extends Behaviour<TaskSupervisorState, EntityCreatedMessage> {
 
-    private static final CreateTaskBehaviour INSTANCE = new CreateTaskBehaviour();
-
     @Override
     protected void perform(EntityCreatedMessage message) {
         Task task = (Task) message.getEntity();
@@ -34,9 +32,5 @@ public class CreateTaskBehaviour extends Behaviour<TaskSupervisorState, EntityCr
     @Override
     protected Class<EntityCreatedMessage> processMessage() {
         return EntityCreatedMessage.class;
-    }
-
-    public static CreateTaskBehaviour get() {
-        return INSTANCE;
     }
 }

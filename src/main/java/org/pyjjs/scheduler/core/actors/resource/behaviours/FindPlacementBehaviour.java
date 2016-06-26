@@ -11,14 +11,6 @@ import org.slf4j.LoggerFactory;
 
 public class FindPlacementBehaviour extends Behaviour<ResourceActorState, IFindSomeResourceMessage> {
 
-    private static final FindPlacementBehaviour INSTANCE = new FindPlacementBehaviour();
-
-    private FindPlacementBehaviour(){}
-
-    public static FindPlacementBehaviour get() {
-        return INSTANCE;
-    }
-
     @Override
     protected void perform(IFindSomeResourceMessage message) {
         ResourceActorState resourceActorState = getActorState();

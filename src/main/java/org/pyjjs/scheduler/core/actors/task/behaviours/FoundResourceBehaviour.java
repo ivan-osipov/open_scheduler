@@ -10,14 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class FoundResourceBehaviour extends Behaviour<TaskActorState, FoundResourceMessage> {
 
-    private static final FoundResourceBehaviour INSTANCE = new FoundResourceBehaviour();
-
-    private FoundResourceBehaviour(){}
-
-    public static FoundResourceBehaviour get() {
-        return INSTANCE;
-    }
-
     @Override
     public void perform(FoundResourceMessage message) {
         System.out.println("Resource found");

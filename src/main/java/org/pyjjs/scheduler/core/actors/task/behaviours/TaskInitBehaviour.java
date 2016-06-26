@@ -7,8 +7,6 @@ import org.pyjjs.scheduler.core.actors.task.supervisor.messages.TaskInitMessage;
 
 public class TaskInitBehaviour extends Behaviour<TaskActorState, TaskInitMessage> {
 
-    private static final TaskInitBehaviour INSTANCE = new TaskInitBehaviour();
-
     @Override
     protected void perform(TaskInitMessage message) {
         TaskActorState taskActorState = getActorState();
@@ -22,9 +20,5 @@ public class TaskInitBehaviour extends Behaviour<TaskActorState, TaskInitMessage
     @Override
     protected Class<TaskInitMessage> processMessage() {
         return TaskInitMessage.class;
-    }
-
-    public static TaskInitBehaviour get() {
-        return INSTANCE;
     }
 }

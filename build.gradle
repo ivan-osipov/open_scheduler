@@ -15,6 +15,7 @@ dependencies {
     compile 'com.google.guava:guava:19.0'
 
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
 
     compile group: 'org.springframework', name: 'spring-context', version: '4.3.0.RELEASE'
     compile group: 'org.aspectj', name: 'aspectjrt', version: '1.8.9'

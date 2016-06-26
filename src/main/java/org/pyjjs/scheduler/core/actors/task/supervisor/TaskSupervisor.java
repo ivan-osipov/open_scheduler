@@ -17,8 +17,8 @@ public class TaskSupervisor extends BehaviourBasedActor<TaskSupervisorState> {
     }
 
     private void fillBehaviours() {
-        addBehaviour(CreateTaskBehaviour.get());
+        addBehaviour(CreateTaskBehaviour.class);
 
-        addBehaviour(FindResourcesBehaviour.get());
+        addBehaviour(FindResourcesBehaviour.class);
     }
 }

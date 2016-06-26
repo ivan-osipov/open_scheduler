@@ -1,11 +1,11 @@
 package org.pyjjs.scheduler.core.actors.common;
 
 import akka.actor.UntypedActor;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class StateOrientedActor<T extends ActorState> extends UntypedActor{
-    protected static Logger LOG = Logger.getLogger(StateOrientedActor.class.getName());
+    protected static Logger LOG = LoggerFactory.getLogger(StateOrientedActor.class.getName());
 
     private T actorState = getInitialState();
 
