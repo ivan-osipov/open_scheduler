@@ -6,10 +6,13 @@ import akka.actor.Props;
 import akka.actor.UntypedActor;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import org.pyjjs.scheduler.core.actors.common.SystemHelper;
+import org.pyjjs.scheduler.core.actors.resource.supervisor.ResourceSupervisor;
 import org.pyjjs.scheduler.core.actors.system.ModificationController;
 import org.pyjjs.scheduler.core.actors.system.messages.EntityCreatedMessage;
 import org.pyjjs.scheduler.core.actors.system.messages.EntityRemovedMessage;
 import org.pyjjs.scheduler.core.actors.system.messages.EntityUpdatedMessage;
+import org.pyjjs.scheduler.core.actors.task.supervisor.TaskSupervisor;
 import org.pyjjs.scheduler.core.api.Plan;
 import org.pyjjs.scheduler.core.actors.resource.ResourceActor;
 import org.pyjjs.scheduler.core.actors.task.TaskActor;
@@ -44,6 +47,10 @@ public class MicroeconomicsBasedMultiAgentScheduler implements Scheduler, Closea
 
     private ActorRef modificationController;
 
+    private ActorRef taskSupervisor;
+
+    private ActorRef resourceSupervisor;
+
 
     public MicroeconomicsBasedMultiAgentScheduler(@Nonnull ObservableDataSource dataSource) {
         this.dataSource = dataSource;
@@ -57,7 +64,7 @@ public class MicroeconomicsBasedMultiAgentScheduler implements Scheduler, Closea
 
     private void createDataSourceModificationControllerListener() {
         List<Class<? extends IdentifiableObject>> interests = Arrays.asList(Task.class, Resource.class);
-        this.dataSource.addDataSourceListener(interests ,new ObservableDataSource.DataSourceListener() {
+        this.dataSource.addDataSourceListener(interests, new ObservableDataSource.DataSourceListener() {
 
             @Override
             public void onCreate(IdentifiableObject entity) {
@@ -83,8 +90,12 @@ public class MicroeconomicsBasedMultiAgentScheduler implements Scheduler, Closea
     }
 
     private void createSystemAgents() {
-        modificationController = actorSystem.actorOf(Props.create(ModificationController.class));
+        taskSupervisor = actorSystem.actorOf(Props.create(TaskSupervisor.class), "tasks");
+        resourceSupervisor = actorSystem.actorOf(Props.create(ResourceSupervisor.class), "resources");
+
+        modificationController = actorSystem.actorOf(Props.create(ModificationController.class, taskSupervisor, resourceSupervisor));
         createDataSourceModificationControllerListener();
+
     }
 
     public MicroeconomicsBasedMultiAgentScheduler() {
@@ -134,20 +145,21 @@ public class MicroeconomicsBasedMultiAgentScheduler implements Scheduler, Closea
             actorSystem.stop(modificationController);
             modificationController = null;
         }
+
+        if(taskSupervisor != null) {
+            actorSystem.stop(taskSupervisor);
+            modificationController = null;
+        }
     }
 
     private Map<IdentifiableObject, ActorRef> fillActorMapByDataSource() {
         for (IdentifiableObject entity : dataSource) {
             Class<? extends UntypedActor> actorType = agentToEntityTypeMap.get(entity.getClass());
             checkNotNull(actorType, "In data source found entity not extended Resource or Task");
-            ActorRef entityActor = createActorByType(actorType);
+            ActorRef entityActor = SystemHelper.createActorByType(actorSystem, actorType);
             agentToEntityMap.put(entity, entityActor);
         }
         return agentToEntityMap;
-    }
-
-    private ActorRef createActorByType(Class<? extends UntypedActor> actorType) {
-        return actorSystem.actorOf(Props.create(actorType));
     }
 
     @Override

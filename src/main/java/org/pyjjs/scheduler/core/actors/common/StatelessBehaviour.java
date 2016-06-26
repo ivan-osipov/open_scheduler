@@ -1,19 +1,23 @@
 package org.pyjjs.scheduler.core.actors.common;
 
-import akka.actor.ActorRef;
+import akka.actor.ActorContext;
 
 public abstract class StatelessBehaviour <M extends Message> {
 
-    protected ActorRef actorRef;
+    private ActorContext actorContext;
 
-    protected StatelessBehaviour(ActorRef actorRef) {
-        this.actorRef = actorRef;
+    protected StatelessBehaviour(ActorContext actorContext) {
+        this.actorContext = actorContext;
+    }
+
+    public ActorContext getActorContext() {
+        return actorContext;
     }
 
     protected abstract void perform(M message);
 
     protected void answer(M inMessage, Message answerMessage) {
-        inMessage.getSender().tell(answerMessage, actorRef);
+        inMessage.getSender().tell(answerMessage, actorContext.self());
     }
 
     protected abstract Class<M> processMessage();

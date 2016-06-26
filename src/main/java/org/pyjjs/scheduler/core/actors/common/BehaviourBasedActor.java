@@ -13,6 +13,14 @@ public abstract class BehaviourBasedActor<T extends ActorState> extends StateOri
     }
 
     @Override
+    public void preStart() throws Exception {
+        super.preStart();
+        init();
+    }
+
+    protected abstract void init();
+
+    @Override
     public void onReceive(Object o) throws Exception {
         if(o instanceof Message) {
             Message castedMessage = (Message) o;
@@ -21,7 +29,17 @@ public abstract class BehaviourBasedActor<T extends ActorState> extends StateOri
                 if(behaviourEntry.getKey().isAssignableFrom(o.getClass())) {
                     Behaviour<T, ? extends Message> behaviour = behaviourEntry.getValue();
                     if (behaviour != null) {
-                        behaviour.setActorState(state);
+                        behaviour.setActorStateInteraction(new ActorStateInteraction<T>() {
+                            @Override
+                            public T getActorState() {
+                                return getCopyOfActorState();
+                            }
+
+                            @Override
+                            public void saveActorState(T actorState) {
+                                updateActorState(actorState);
+                            }
+                        });
                         behaviour.perform(castMessage(castedMessage));
                     }
                 }

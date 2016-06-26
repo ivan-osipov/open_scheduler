@@ -47,7 +47,6 @@ public abstract class ObservableDataSource implements Collection<IdentifiableObj
 
     public void notifyAboutCreate(IdentifiableObject entity) {
         notify(entity, (listener) -> listener.onCreate(entity));
-
     }
 
     public void notifyAboutUpdate(IdentifiableObject entity) {

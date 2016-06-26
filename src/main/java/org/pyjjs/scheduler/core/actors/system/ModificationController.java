@@ -1,17 +1,29 @@
 package org.pyjjs.scheduler.core.actors.system;
 
-import org.pyjjs.scheduler.core.actors.common.StatelessBehaviourBasedActor;
+import akka.actor.ActorRef;
+import org.pyjjs.scheduler.core.actors.common.BehaviourBasedActor;
 import org.pyjjs.scheduler.core.actors.system.behaviours.DataSourceChangeBehaviour;
 
-public class ModificationController extends StatelessBehaviourBasedActor {
+public class ModificationController extends BehaviourBasedActor<ModificationControllerState> {
+
+    public ModificationController(ActorRef taskSupervisor, ActorRef resourceSupervisor) {
+        ModificationControllerState state = getCopyOfActorState();
+        state.setTaskSupervisor(taskSupervisor);
+        state.setResourceSupervisor(resourceSupervisor);
+        updateActorState(state);
+    }
 
     @Override
-    public void preStart() throws Exception {
-        super.preStart();
+    protected void init() {
         fillBehaviours();
     }
 
     private void fillBehaviours() {
-        addBehaviour(DataSourceChangeBehaviour.get(getSelf()));
+        addBehaviour(DataSourceChangeBehaviour.get());
+    }
+
+    @Override
+    protected ModificationControllerState getInitialState() {
+        return new ModificationControllerState(getContext());
     }
 }

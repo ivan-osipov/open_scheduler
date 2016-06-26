@@ -9,7 +9,6 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean class="org.pyjjs.scheduler.test.Application"/>
-    <import resource="logging-enable.xml"/>
 
     <context:component-scan base-package="org.pyjjs.scheduler.core.api.microeconomic"/>
 </beans>

@@ -28,6 +28,14 @@ public abstract class StatelessBehaviourBasedActor extends UntypedActor {
         }
     }
 
+    @Override
+    public void preStart() throws Exception {
+        super.preStart();
+        initialize();
+    }
+
+    protected abstract void initialize();
+
     /**
      * unchecked reason: {@link StatelessBehaviourBasedActor#addBehaviour(StatelessBehaviour)}
      */
