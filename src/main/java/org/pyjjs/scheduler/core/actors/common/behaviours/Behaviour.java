@@ -1,10 +1,9 @@
-package org.pyjjs.scheduler.core.actors.common;
+package org.pyjjs.scheduler.core.actors.common.behaviours;
 
-import akka.actor.AbstractScheduler;
 import akka.actor.ActorRef;
-import akka.actor.ActorSelection;
-import akka.actor.Scheduler;
-import scala.concurrent.ExecutionContext;
+import org.pyjjs.scheduler.core.actors.common.ActorState;
+import org.pyjjs.scheduler.core.actors.common.ActorStateInteraction;
+import org.pyjjs.scheduler.core.actors.common.messages.Message;
 import scala.concurrent.duration.FiniteDuration;
 
 import java.util.concurrent.TimeUnit;

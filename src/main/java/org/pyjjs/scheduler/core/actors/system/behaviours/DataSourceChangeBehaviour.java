@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.actors.system.behaviours;
 
-import org.pyjjs.scheduler.core.actors.common.Behaviour;
+import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.system.ModificationControllerState;
 import org.pyjjs.scheduler.core.actors.system.messages.DataSourceChangedMessage;
 import org.pyjjs.scheduler.core.model.IdentifiableObject;

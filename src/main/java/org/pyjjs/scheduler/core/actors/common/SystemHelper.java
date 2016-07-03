@@ -11,8 +11,4 @@ public class SystemHelper {
         return actorSystem.actorOf(Props.create(actorType));
     }
 
-    public static ActorRef createActorByType(ActorSystem actorSystem, Class<? extends UntypedActor> actorType, String path) {
-        return actorSystem.actorOf(Props.create(actorType),path);
-    }
-
 }

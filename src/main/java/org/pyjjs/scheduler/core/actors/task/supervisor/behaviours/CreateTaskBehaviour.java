@@ -2,7 +2,7 @@ package org.pyjjs.scheduler.core.actors.task.supervisor.behaviours;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import org.pyjjs.scheduler.core.actors.common.Behaviour;
+import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.system.messages.EntityCreatedMessage;
 import org.pyjjs.scheduler.core.actors.task.TaskActor;
 import org.pyjjs.scheduler.core.actors.task.supervisor.TaskSupervisorState;

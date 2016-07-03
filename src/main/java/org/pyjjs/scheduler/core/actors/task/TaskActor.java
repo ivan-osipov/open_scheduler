@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.actors.task;
 
-import org.pyjjs.scheduler.core.actors.common.BehaviourBasedActor;
+import org.pyjjs.scheduler.core.actors.common.behaviours.BehaviourBasedActor;
 import org.pyjjs.scheduler.core.actors.task.behaviours.FoundResourceBehaviour;
 import org.pyjjs.scheduler.core.actors.task.behaviours.OfferStoreBehaviour;
 import org.pyjjs.scheduler.core.actors.task.behaviours.OffersCheckBehaviour;

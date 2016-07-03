@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.actors.task.supervisor.behaviours;
 
-import org.pyjjs.scheduler.core.actors.common.Behaviour;
+import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.task.messages.IFindSomeResourceMessage;
 import org.pyjjs.scheduler.core.actors.task.supervisor.TaskSupervisorState;
 

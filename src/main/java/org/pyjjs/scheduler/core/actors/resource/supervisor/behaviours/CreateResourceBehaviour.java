@@ -2,7 +2,7 @@ package org.pyjjs.scheduler.core.actors.resource.supervisor.behaviours;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import org.pyjjs.scheduler.core.actors.common.Behaviour;
+import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.resource.ResourceActor;
 import org.pyjjs.scheduler.core.actors.resource.supervisor.ResourceSupervisorState;
 import org.pyjjs.scheduler.core.actors.resource.supervisor.messages.ResourceInitMessage;

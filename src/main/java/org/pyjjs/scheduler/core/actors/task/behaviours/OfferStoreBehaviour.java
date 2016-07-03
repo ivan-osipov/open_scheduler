@@ -1,7 +1,7 @@
 package org.pyjjs.scheduler.core.actors.task.behaviours;
 
 import com.typesafe.config.Config;
-import org.pyjjs.scheduler.core.actors.common.Behaviour;
+import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.resource.messages.OfferMessage;
 import org.pyjjs.scheduler.core.actors.task.TaskActorState;
 import org.pyjjs.scheduler.core.actors.task.messages.CheckOffersMessage;

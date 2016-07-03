@@ -1,7 +1,7 @@
 package org.pyjjs.scheduler.core.actors.system;
 
 import akka.actor.ActorRef;
-import org.pyjjs.scheduler.core.actors.common.BehaviourBasedActor;
+import org.pyjjs.scheduler.core.actors.common.behaviours.BehaviourBasedActor;
 import org.pyjjs.scheduler.core.actors.system.behaviours.DataSourceChangeBehaviour;
 
 public class ModificationController extends BehaviourBasedActor<ModificationControllerState> {

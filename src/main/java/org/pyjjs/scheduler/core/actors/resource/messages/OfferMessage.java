@@ -1,7 +1,7 @@
 package org.pyjjs.scheduler.core.actors.resource.messages;
 
 import akka.actor.ActorRef;
-import org.pyjjs.scheduler.core.actors.common.Message;
+import org.pyjjs.scheduler.core.actors.common.messages.Message;
 
 public class OfferMessage extends Message {
 

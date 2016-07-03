@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.actors.task.supervisor;
 
-import org.pyjjs.scheduler.core.actors.common.BehaviourBasedActor;
+import org.pyjjs.scheduler.core.actors.common.behaviours.BehaviourBasedActor;
 import org.pyjjs.scheduler.core.actors.task.supervisor.behaviours.CreateTaskBehaviour;
 import org.pyjjs.scheduler.core.actors.task.supervisor.behaviours.FindResourcesBehaviour;
 

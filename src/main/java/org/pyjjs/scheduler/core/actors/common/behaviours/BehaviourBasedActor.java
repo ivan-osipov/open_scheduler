@@ -1,6 +1,10 @@
-package org.pyjjs.scheduler.core.actors.common;
+package org.pyjjs.scheduler.core.actors.common.behaviours;
 
 import com.google.common.collect.Maps;
+import org.pyjjs.scheduler.core.actors.common.ActorState;
+import org.pyjjs.scheduler.core.actors.common.ActorStateInteraction;
+import org.pyjjs.scheduler.core.actors.common.StateOrientedActor;
+import org.pyjjs.scheduler.core.actors.common.messages.Message;
 
 import java.util.Map;
 

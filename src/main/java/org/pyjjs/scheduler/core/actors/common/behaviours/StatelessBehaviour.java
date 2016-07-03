@@ -1,6 +1,7 @@
-package org.pyjjs.scheduler.core.actors.common;
+package org.pyjjs.scheduler.core.actors.common.behaviours;
 
 import akka.actor.ActorContext;
+import org.pyjjs.scheduler.core.actors.common.messages.Message;
 
 public abstract class StatelessBehaviour <M extends Message> {
 

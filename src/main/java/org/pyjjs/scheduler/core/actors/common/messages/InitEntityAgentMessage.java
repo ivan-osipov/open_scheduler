@@ -1,7 +1,6 @@
 package org.pyjjs.scheduler.core.actors.common.messages;
 
 import akka.actor.ActorRef;
-import org.pyjjs.scheduler.core.actors.common.Message;
 import org.pyjjs.scheduler.core.model.IdentifiableObject;
 
 public class InitEntityAgentMessage<T extends IdentifiableObject> extends Message {

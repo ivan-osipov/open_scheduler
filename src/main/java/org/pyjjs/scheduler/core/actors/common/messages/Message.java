@@ -1,4 +1,4 @@
-package org.pyjjs.scheduler.core.actors.common;
+package org.pyjjs.scheduler.core.actors.common.messages;
 
 import akka.actor.ActorRef;
 
