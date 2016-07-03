@@ -3,12 +3,9 @@ package org.pyjjs.scheduler.core.actors.system.behaviours;
 import org.pyjjs.scheduler.core.actors.common.Behaviour;
 import org.pyjjs.scheduler.core.actors.system.ModificationControllerState;
 import org.pyjjs.scheduler.core.actors.system.messages.DataSourceChangedMessage;
-import org.pyjjs.scheduler.core.actors.system.messages.EntityCreatedMessage;
-import org.pyjjs.scheduler.core.actors.system.messages.EntityRemovedMessage;
-import org.pyjjs.scheduler.core.actors.system.messages.EntityUpdatedMessage;
-import org.pyjjs.scheduler.core.model.primary.IdentifiableObject;
-import org.pyjjs.scheduler.core.model.primary.Resource;
-import org.pyjjs.scheduler.core.model.primary.Task;
+import org.pyjjs.scheduler.core.model.IdentifiableObject;
+import org.pyjjs.scheduler.core.model.Resource;
+import org.pyjjs.scheduler.core.model.Task;
 
 public class DataSourceChangeBehaviour extends Behaviour<ModificationControllerState, DataSourceChangedMessage> {
 

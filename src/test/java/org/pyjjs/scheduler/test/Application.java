@@ -2,10 +2,9 @@ package org.pyjjs.scheduler.test;
 
 import org.pyjjs.scheduler.core.api.Scheduler;
 import org.pyjjs.scheduler.core.api.SchedulerFactory;
-import org.pyjjs.scheduler.core.model.primary.Resource;
-import org.pyjjs.scheduler.core.api.microeconomic.MicroeconomicsSchedulerFactory;
+import org.pyjjs.scheduler.core.model.Resource;
 import org.pyjjs.scheduler.core.data.ObservableDataSource;
-import org.pyjjs.scheduler.core.model.primary.Task;
+import org.pyjjs.scheduler.core.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -40,6 +39,9 @@ public class Application {
             Resource resource = new Resource();
             resource.setId(UUID.randomUUID());
             dataSource.add(resource);
+            Resource resource1 = new Resource();
+            resource.setId(UUID.randomUUID());
+            dataSource.add(resource1);
 
             Thread.sleep(2000L);
             Task task = new Task();

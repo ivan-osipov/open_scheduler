@@ -1,4 +1,4 @@
-package org.pyjjs.scheduler.core.model.primary;
+package org.pyjjs.scheduler.core.model;
 
 public class ResourceUsage extends IdentifiableObject{
     private Resource resource;

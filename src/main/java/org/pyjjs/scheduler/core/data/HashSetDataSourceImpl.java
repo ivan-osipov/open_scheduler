@@ -1,7 +1,7 @@
 package org.pyjjs.scheduler.core.data;
 
 import com.google.common.collect.Lists;
-import org.pyjjs.scheduler.core.model.primary.IdentifiableObject;
+import org.pyjjs.scheduler.core.model.IdentifiableObject;
 
 import javax.annotation.Nonnull;
 import java.util.*;

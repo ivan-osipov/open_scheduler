@@ -4,10 +4,7 @@ import akka.actor.ActorContext;
 import akka.actor.ActorRef;
 import org.pyjjs.scheduler.core.actors.common.ActorState;
 import org.pyjjs.scheduler.core.actors.common.supervisor.SupervisorState;
-import org.pyjjs.scheduler.core.model.primary.Task;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.pyjjs.scheduler.core.model.Task;
 
 public class TaskSupervisorState extends SupervisorState<Task> {
 

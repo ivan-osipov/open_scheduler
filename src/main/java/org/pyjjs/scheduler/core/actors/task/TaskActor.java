@@ -2,7 +2,8 @@ package org.pyjjs.scheduler.core.actors.task;
 
 import org.pyjjs.scheduler.core.actors.common.BehaviourBasedActor;
 import org.pyjjs.scheduler.core.actors.task.behaviours.FoundResourceBehaviour;
-import org.pyjjs.scheduler.core.actors.task.behaviours.ResourceInfoStoreBehaviour;
+import org.pyjjs.scheduler.core.actors.task.behaviours.OfferStoreBehaviour;
+import org.pyjjs.scheduler.core.actors.task.behaviours.OffersCheckBehaviour;
 import org.pyjjs.scheduler.core.actors.task.behaviours.TaskInitBehaviour;
 
 public class TaskActor extends BehaviourBasedActor<TaskActorState> {
@@ -21,6 +22,7 @@ public class TaskActor extends BehaviourBasedActor<TaskActorState> {
     private void fillBehaviours() {
         addBehaviour(TaskInitBehaviour.class);
         addBehaviour(FoundResourceBehaviour.class);
-        addBehaviour(ResourceInfoStoreBehaviour.class);
+        addBehaviour(OfferStoreBehaviour.class);
+        addBehaviour(OffersCheckBehaviour.class);
     }
 }

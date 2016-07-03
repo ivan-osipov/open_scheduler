@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.logic.objectiveFunctions;
 
-import org.pyjjs.scheduler.core.model.primary.Task;
+import org.pyjjs.scheduler.core.model.Task;
 
 public class TaskObjectiveFunction extends ObjectiveFunction<Task> {
     public static final String PROPOSED_LEAD_TIME_IN_MILLS = "task.proposed_lead_time.in_mills";

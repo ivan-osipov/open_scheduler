@@ -2,7 +2,7 @@ package org.pyjjs.scheduler.core.actors.system.messages;
 
 import akka.actor.ActorRef;
 import org.pyjjs.scheduler.core.actors.common.Message;
-import org.pyjjs.scheduler.core.model.primary.IdentifiableObject;
+import org.pyjjs.scheduler.core.model.IdentifiableObject;
 
 public class DataSourceChangedMessage extends Message {
 

@@ -6,6 +6,8 @@ import akka.actor.Props;
 import akka.actor.UntypedActor;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.pyjjs.scheduler.core.actors.common.SystemHelper;
 import org.pyjjs.scheduler.core.actors.resource.supervisor.ResourceSupervisor;
 import org.pyjjs.scheduler.core.actors.system.ModificationController;
@@ -20,9 +22,9 @@ import org.pyjjs.scheduler.core.api.PlanCompleteListener;
 import org.pyjjs.scheduler.core.api.Scheduler;
 import org.pyjjs.scheduler.core.data.HashSetDataSourceImpl;
 import org.pyjjs.scheduler.core.data.ObservableDataSource;
-import org.pyjjs.scheduler.core.model.primary.IdentifiableObject;
-import org.pyjjs.scheduler.core.model.primary.Resource;
-import org.pyjjs.scheduler.core.model.primary.Task;
+import org.pyjjs.scheduler.core.model.IdentifiableObject;
+import org.pyjjs.scheduler.core.model.Resource;
+import org.pyjjs.scheduler.core.model.Task;
 
 import javax.annotation.Nonnull;
 import java.io.Closeable;
@@ -33,6 +35,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class MicroeconomicsBasedMultiAgentScheduler implements Scheduler, Closeable {
 
+    private static final String DEFAULT_SCHEDULER_CONFIG_PATH = "default_scheduler_config.properties";
     private ObservableDataSource dataSource;
 
     private ActorSystem actorSystem;
@@ -59,7 +62,8 @@ public class MicroeconomicsBasedMultiAgentScheduler implements Scheduler, Closea
 
     private void prepareAndLaunch() {
         fillAgentToEntityClassMapping();
-        actorSystem = ActorSystem.apply("scheduler");
+        Config config = ConfigFactory.load(DEFAULT_SCHEDULER_CONFIG_PATH);
+        actorSystem = ActorSystem.apply("scheduler", config);
     }
 
     private void createDataSourceModificationControllerListener() {

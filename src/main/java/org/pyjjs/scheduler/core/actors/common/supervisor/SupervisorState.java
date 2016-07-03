@@ -3,7 +3,7 @@ package org.pyjjs.scheduler.core.actors.common.supervisor;
 import akka.actor.ActorContext;
 import akka.actor.ActorRef;
 import org.pyjjs.scheduler.core.actors.common.ActorState;
-import org.pyjjs.scheduler.core.model.primary.IdentifiableObject;
+import org.pyjjs.scheduler.core.model.IdentifiableObject;
 
 import java.util.HashMap;
 import java.util.Map;

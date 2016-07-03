@@ -7,7 +7,7 @@ import org.pyjjs.scheduler.core.actors.resource.ResourceActor;
 import org.pyjjs.scheduler.core.actors.resource.supervisor.ResourceSupervisorState;
 import org.pyjjs.scheduler.core.actors.resource.supervisor.messages.ResourceInitMessage;
 import org.pyjjs.scheduler.core.actors.system.messages.EntityCreatedMessage;
-import org.pyjjs.scheduler.core.model.primary.Resource;
+import org.pyjjs.scheduler.core.model.Resource;
 
 public class CreateResourceBehaviour extends Behaviour<ResourceSupervisorState, EntityCreatedMessage> {
 

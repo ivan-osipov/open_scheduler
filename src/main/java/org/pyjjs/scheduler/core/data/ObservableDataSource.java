@@ -2,12 +2,10 @@ package org.pyjjs.scheduler.core.data;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
-import org.pyjjs.scheduler.core.model.primary.IdentifiableObject;
+import org.pyjjs.scheduler.core.model.IdentifiableObject;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public abstract class ObservableDataSource implements Collection<IdentifiableObject> {
 

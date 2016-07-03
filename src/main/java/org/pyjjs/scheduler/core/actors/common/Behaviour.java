@@ -1,7 +1,13 @@
 package org.pyjjs.scheduler.core.actors.common;
 
+import akka.actor.AbstractScheduler;
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
+import akka.actor.Scheduler;
+import scala.concurrent.ExecutionContext;
+import scala.concurrent.duration.FiniteDuration;
+
+import java.util.concurrent.TimeUnit;
 
 public abstract class Behaviour<T extends ActorState, M extends Message> {
 
@@ -47,6 +53,19 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
                 .system()
                 .actorSelection("user/resources/*")
                 .tell(message, getActorRef());
+    }
+
+    public void sendToSelf(Message message) {
+        send(getActorRef(), message);
+    }
+
+    public void sendByDelay(Message message, long delay, TimeUnit timeUnit) {
+        getActorState().getActorSystem()
+                .scheduler()
+                .scheduleOnce(
+                        FiniteDuration.apply(delay, timeUnit),
+                        ()-> sendToSelf(message),
+                        getActorState().getActorContext().dispatcher());
     }
 
     public void sendToTasks(Message message) {

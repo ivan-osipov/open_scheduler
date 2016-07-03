@@ -3,7 +3,7 @@ package org.pyjjs.scheduler.core.actors.resource;
 import akka.actor.ActorContext;
 import org.pyjjs.scheduler.core.actors.common.ActorState;
 import org.pyjjs.scheduler.core.actors.common.SourceBasedActorState;
-import org.pyjjs.scheduler.core.model.primary.Resource;
+import org.pyjjs.scheduler.core.model.Resource;
 
 public class ResourceActorState extends SourceBasedActorState<Resource> {
 
