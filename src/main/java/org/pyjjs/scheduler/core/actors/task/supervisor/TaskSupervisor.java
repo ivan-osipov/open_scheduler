@@ -2,7 +2,7 @@ package org.pyjjs.scheduler.core.actors.task.supervisor;
 
 import org.pyjjs.scheduler.core.actors.common.behaviours.BehaviourBasedActor;
 import org.pyjjs.scheduler.core.actors.task.supervisor.behaviours.CreateTaskBehaviour;
-import org.pyjjs.scheduler.core.actors.task.supervisor.behaviours.FindResourcesBehaviour;
+import org.pyjjs.scheduler.core.actors.task.supervisor.behaviours.ResourceAppearedSupervisorBehaviour;
 
 public class TaskSupervisor extends BehaviourBasedActor<TaskSupervisorState> {
 
@@ -18,7 +18,6 @@ public class TaskSupervisor extends BehaviourBasedActor<TaskSupervisorState> {
 
     private void fillBehaviours() {
         addBehaviour(CreateTaskBehaviour.class);
-
-        addBehaviour(FindResourcesBehaviour.class);
+        addBehaviour(ResourceAppearedSupervisorBehaviour.class);
     }
 }

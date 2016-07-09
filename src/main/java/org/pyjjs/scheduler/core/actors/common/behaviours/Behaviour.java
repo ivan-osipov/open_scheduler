@@ -1,18 +1,29 @@
 package org.pyjjs.scheduler.core.actors.common.behaviours;
 
 import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import com.typesafe.config.Config;
 import org.pyjjs.scheduler.core.actors.common.ActorState;
 import org.pyjjs.scheduler.core.actors.common.ActorStateInteraction;
+import org.pyjjs.scheduler.core.actors.common.SystemConfigKeys;
+import org.pyjjs.scheduler.core.actors.common.locale.LangResolver;
+import org.pyjjs.scheduler.core.actors.common.locale.LocaleNotFoundException;
+import org.pyjjs.scheduler.core.actors.common.locale.LocaleResolver;
 import org.pyjjs.scheduler.core.actors.common.messages.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import scala.concurrent.duration.FiniteDuration;
 
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 public abstract class Behaviour<T extends ActorState, M extends Message> {
+    public final Logger BEHAVIOUR_LOG = LoggerFactory.getLogger(getClass());
 
     private ActorStateInteraction<T> actorStateInteraction;
 
     private T actorState;
+    private LocaleResolver localeResolver;
 
     protected Behaviour(){}
 
@@ -24,6 +35,10 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
 
     protected void send(ActorRef receiver, Message message) {
         receiver.tell(message, getActorRef());
+    }
+
+    protected void sendToAll(Collection<ActorRef> receivers, Message message) {
+        receivers.stream().forEach((receiver) -> send(receiver, message));
     }
 
     protected ActorRef getActorRef() {
@@ -41,6 +56,27 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
     public void setActorStateInteraction(ActorStateInteraction<T> actorStateInteraction) {
         this.actorStateInteraction = actorStateInteraction;
         this.actorState = actorStateInteraction.getActorState();
+        try {
+            LangResolver langResolver = getLangResolver();
+            this.localeResolver = LocaleResolver.get(langResolver);
+        } catch (LocaleNotFoundException e) {
+            BEHAVIOUR_LOG.warn("Locale init problem", e);
+        }
+    }
+
+    private LangResolver getLangResolver() {
+        ActorSystem actorSystem = getActorState().getActorSystem();
+        ActorSystem.Settings actorSystemSettings = actorSystem.settings();
+        Config systemConfig = actorSystemSettings.config();
+        return new LangResolver(systemConfig.getString(SystemConfigKeys.DEFAULT_LOCALE_KEY));
+    }
+
+    protected void printMessage(String messageKey, Object... properties) {
+        String message = messageKey;
+        if(localeResolver != null) {
+            message = localeResolver.getString(messageKey, properties);
+        }
+        BEHAVIOUR_LOG.info(message, properties);
     }
 
     public void sendToParent(Message message) {
@@ -51,6 +87,20 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
         getActorState().getActorContext()
                 .system()
                 .actorSelection("user/resources/*")
+                .tell(message, getActorRef());
+    }
+
+    public void sendToResourceSupervisor(Message message) {
+        getActorState().getActorContext()
+                .system()
+                .actorSelection("user/resources")
+                .tell(message, getActorRef());
+    }
+
+    public void sendToTaskSupervisor(Message message) {
+        getActorState().getActorContext()
+                .system()
+                .actorSelection("user/tasks")
                 .tell(message, getActorRef());
     }
 

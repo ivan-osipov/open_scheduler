@@ -72,21 +72,21 @@ public class MicroeconomicsBasedMultiAgentScheduler implements Scheduler, Closea
 
             @Override
             public void onCreate(IdentifiableObject entity) {
-                EntityCreatedMessage msg = new EntityCreatedMessage(ActorRef.noSender());
+                EntityCreatedMessage msg = new EntityCreatedMessage();
                 msg.setEntity(entity);
                 modificationController.tell(msg, ActorRef.noSender());
             }
 
             @Override
             public void onUpdate(IdentifiableObject entity) {
-                EntityUpdatedMessage msg = new EntityUpdatedMessage(ActorRef.noSender());
+                EntityUpdatedMessage msg = new EntityUpdatedMessage();
                 msg.setEntity(entity);
                 modificationController.tell(msg, ActorRef.noSender());
             }
 
             @Override
             public void onRemove(IdentifiableObject entity) {
-                EntityRemovedMessage msg = new EntityRemovedMessage(ActorRef.noSender());
+                EntityRemovedMessage msg = new EntityRemovedMessage();
                 msg.setEntity(entity);
                 modificationController.tell(msg, ActorRef.noSender());
             }

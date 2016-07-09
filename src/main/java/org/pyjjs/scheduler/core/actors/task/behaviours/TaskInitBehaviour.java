@@ -2,7 +2,7 @@ package org.pyjjs.scheduler.core.actors.task.behaviours;
 
 import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.task.TaskActorState;
-import org.pyjjs.scheduler.core.actors.task.messages.IFindSomeResourceMessage;
+import org.pyjjs.scheduler.core.actors.task.messages.IFindResourceMessage;
 import org.pyjjs.scheduler.core.actors.task.supervisor.messages.TaskInitMessage;
 
 public class TaskInitBehaviour extends Behaviour<TaskActorState, TaskInitMessage> {
@@ -14,7 +14,7 @@ public class TaskInitBehaviour extends Behaviour<TaskActorState, TaskInitMessage
         taskActorState.setInitialized(true);
         saveActorState(taskActorState);
 
-        sendToResources(new IFindSomeResourceMessage(getActorRef()));
+        sendToResources(new IFindResourceMessage(getActorRef()));
     }
 
     @Override

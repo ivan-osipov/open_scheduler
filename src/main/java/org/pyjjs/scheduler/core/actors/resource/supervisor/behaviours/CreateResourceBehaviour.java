@@ -5,6 +5,7 @@ import akka.actor.Props;
 import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.resource.ResourceActor;
 import org.pyjjs.scheduler.core.actors.resource.supervisor.ResourceSupervisorState;
+import org.pyjjs.scheduler.core.actors.resource.supervisor.messages.ResourceAppearedMessage;
 import org.pyjjs.scheduler.core.actors.resource.supervisor.messages.ResourceInitMessage;
 import org.pyjjs.scheduler.core.actors.system.messages.EntityCreatedMessage;
 import org.pyjjs.scheduler.core.model.Resource;
@@ -21,6 +22,12 @@ public class CreateResourceBehaviour extends Behaviour<ResourceSupervisorState, 
         actorState.registerTaskActor(resource, newResourceActorRef);
 
         saveActorState(actorState);
+
+        notifyTasksAboutNewResource(newResourceActorRef, resource);
+    }
+
+    private void notifyTasksAboutNewResource(ActorRef resourceActorRef, Resource resource) {
+        sendToTaskSupervisor(new ResourceAppearedMessage(resourceActorRef, resource, getActorRef()));
     }
 
     private ActorRef createResourceActor() {

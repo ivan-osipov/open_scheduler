@@ -2,8 +2,8 @@ package org.pyjjs.scheduler.test;
 
 import org.pyjjs.scheduler.core.api.Scheduler;
 import org.pyjjs.scheduler.core.api.SchedulerFactory;
-import org.pyjjs.scheduler.core.model.Resource;
 import org.pyjjs.scheduler.core.data.ObservableDataSource;
+import org.pyjjs.scheduler.core.model.Resource;
 import org.pyjjs.scheduler.core.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -35,15 +35,10 @@ public class Application {
         ObservableDataSource dataSource = scheduler.getDataSource();
 
         try {
-            Thread.sleep(2000L);
-            Resource resource = new Resource();
-            resource.setId(UUID.randomUUID());
-            dataSource.add(resource);
-            Resource resource1 = new Resource();
-            resource.setId(UUID.randomUUID());
-            dataSource.add(resource1);
+            Resource resource0 = new Resource();
+            resource0.setId(UUID.randomUUID());
+            dataSource.add(resource0);
 
-            Thread.sleep(2000L);
             Task task = new Task();
             task.setId(UUID.randomUUID());
             Task task2 = new Task();
@@ -55,6 +50,14 @@ public class Application {
             dataSource.add(task2);
             Thread.sleep(2000L);
             dataSource.add(task3);
+
+            Thread.sleep(2000L);
+            Resource resource = new Resource();
+            resource.setId(UUID.randomUUID());
+            dataSource.add(resource);
+            Resource resource1 = new Resource();
+            resource.setId(UUID.randomUUID());
+            dataSource.add(resource1);
 
         } catch (InterruptedException e) {
             e.printStackTrace();

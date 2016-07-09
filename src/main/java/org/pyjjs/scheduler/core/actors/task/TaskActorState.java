@@ -13,6 +13,7 @@ public class TaskActorState extends SourceBasedActorState<Task> {
 
     private Set<OfferMessage> offers = new HashSet<>();
     private boolean checkOffersScheduled = false;
+    private Double discontent = null;
 
     public TaskActorState(ActorContext actorContext) {
         super(actorContext);
@@ -32,6 +33,14 @@ public class TaskActorState extends SourceBasedActorState<Task> {
 
     public void setCheckOffersScheduled(boolean checkOffersScheduled) {
         this.checkOffersScheduled = checkOffersScheduled;
+    }
+
+    public Double getDiscontent() {
+        return discontent;
+    }
+
+    public void setDiscontent(Double discontent) {
+        this.discontent = discontent;
     }
 
     @Override

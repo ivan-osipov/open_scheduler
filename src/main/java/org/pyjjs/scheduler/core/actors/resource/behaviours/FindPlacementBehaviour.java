@@ -3,12 +3,12 @@ package org.pyjjs.scheduler.core.actors.resource.behaviours;
 import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.resource.ResourceActorState;
 import org.pyjjs.scheduler.core.actors.resource.messages.OfferMessage;
-import org.pyjjs.scheduler.core.actors.task.messages.IFindSomeResourceMessage;
+import org.pyjjs.scheduler.core.actors.task.messages.IFindResourceMessage;
 
-public class FindPlacementBehaviour extends Behaviour<ResourceActorState, IFindSomeResourceMessage> {
+public class FindPlacementBehaviour extends Behaviour<ResourceActorState, IFindResourceMessage> {
 
     @Override
-    protected void perform(IFindSomeResourceMessage message) {
+    protected void perform(IFindResourceMessage message) {
         ResourceActorState resourceActorState = getActorState();
         OfferMessage answer = new OfferMessage(getActorRef());
         answer.setPlacingPrice(resourceActorState.getPlacingPrice());
@@ -16,7 +16,7 @@ public class FindPlacementBehaviour extends Behaviour<ResourceActorState, IFindS
     }
 
     @Override
-    protected Class<IFindSomeResourceMessage> processMessage() {
-        return IFindSomeResourceMessage.class;
+    protected Class<IFindResourceMessage> processMessage() {
+        return IFindResourceMessage.class;
     }
 }
