@@ -22,4 +22,6 @@ dependencies {
 
     compile group: 'org.springframework', name: 'spring-context', version: '4.3.0.RELEASE'
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    testCompile project: ':scheduler-core_main'
 }
