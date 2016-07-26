@@ -5,10 +5,10 @@ import akka.actor.ActorSystem;
 import com.typesafe.config.Config;
 import org.pyjjs.scheduler.core.actors.common.ActorState;
 import org.pyjjs.scheduler.core.actors.common.ActorStateInteraction;
-import org.pyjjs.scheduler.core.actors.common.SystemConfigKeys;
-import org.pyjjs.scheduler.core.actors.common.locale.LangResolver;
-import org.pyjjs.scheduler.core.actors.common.locale.LocaleNotFoundException;
-import org.pyjjs.scheduler.core.actors.common.locale.LocaleResolver;
+import org.pyjjs.scheduler.core.common.SystemConfigKeys;
+import org.pyjjs.scheduler.core.common.locale.LangResolver;
+import org.pyjjs.scheduler.core.common.locale.LocaleNotFoundException;
+import org.pyjjs.scheduler.core.common.locale.LocaleResolver;
 import org.pyjjs.scheduler.core.actors.common.messages.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +43,14 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
 
     protected ActorRef getActorRef() {
         return getActorState().getActorRef();
+    }
+
+    protected String getActorLocalName() {
+        return getActorLocalName(getActorRef());
+    }
+
+    protected String getActorLocalName(ActorRef actorRef) {
+        return actorRef.path().name();
     }
 
     protected void saveActorState(T actorState) {

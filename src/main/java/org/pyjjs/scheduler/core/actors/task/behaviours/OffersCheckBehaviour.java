@@ -4,17 +4,29 @@ import org.pyjjs.scheduler.core.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.actors.resource.messages.OfferMessage;
 import org.pyjjs.scheduler.core.actors.task.TaskActorState;
 import org.pyjjs.scheduler.core.actors.task.messages.CheckOffersMessage;
+import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 public class OffersCheckBehaviour extends Behaviour<TaskActorState,CheckOffersMessage> {
 
     @Override
     protected void perform(CheckOffersMessage message) {
-        System.out.println("Task " + getActorRef() + " check resource prices");
+        printMessage(LocaleMessageKeys.TASK_PROCESS_OFFERS, getActorLocalName());
         Set<OfferMessage> resourcePrices = getActorState().getOffers();
-        for (OfferMessage resourcePrice : resourcePrices) {
-            System.out.println("Resource" + resourcePrice.getSender() + " предложил " + resourcePrice.getPlacingPrice());
+        Optional<OfferMessage> optionalOffer = resourcePrices
+                .stream()
+                .min((offer1, offer2) -> offer1.getPlacingPrice().compareTo(offer2.getPlacingPrice()));
+        if(optionalOffer.isPresent()) {
+            OfferMessage offer = optionalOffer.get();
+            printMessage(LocaleMessageKeys.TASK_FOUND_BEST_OFFER, getActorLocalName(), offer.getPlacingPrice(), getActorLocalName(offer.getSender()));
+            //TODO react
+        } else {
+            printMessage(LocaleMessageKeys.TASK_OFFER_NOT_FOUND, getActorLocalName());
         }
     }
 

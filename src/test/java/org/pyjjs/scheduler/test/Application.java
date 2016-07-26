@@ -29,8 +29,7 @@ public class Application {
     public void run(String[] args) {
         Scheduler scheduler = schedulerFactory.createScheduler();
 
-
-        scheduler.asyncRun(plan -> System.out.println(plan.toString()));
+        scheduler.run(plan -> System.out.println(plan.toString()));
 
         ObservableDataSource dataSource = scheduler.getDataSource();
 

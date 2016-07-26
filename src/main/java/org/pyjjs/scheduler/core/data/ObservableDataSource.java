@@ -56,13 +56,11 @@ public abstract class ObservableDataSource implements Collection<IdentifiableObj
     }
 
     private void notify(IdentifiableObject entity, Consumer<DataSourceListener> notification) {
-        dataSourceListeners.entries()
-                .stream()
-                .forEach(listenerEntry -> {
-                    if (listenerEntry.getKey().isAssignableFrom(entity.getClass())) {
-                        notification.accept(listenerEntry.getValue());
-                    }
-                });
+        dataSourceListeners.entries().forEach(listenerEntry -> {
+            if (listenerEntry.getKey().isAssignableFrom(entity.getClass())) {
+                notification.accept(listenerEntry.getValue());
+            }
+        });
     }
 
     public interface DataSourceListener {
