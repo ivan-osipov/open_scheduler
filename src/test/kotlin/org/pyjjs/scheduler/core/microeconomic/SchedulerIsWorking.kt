@@ -8,6 +8,7 @@ import java.util.*
 
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.CoreMatchers.*
+import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 
 class SchedulerIsWorking: BaseSchedulerTest() {
 
@@ -25,8 +26,10 @@ class SchedulerIsWorking: BaseSchedulerTest() {
         saveEntities(resource, task)
     }
 
-    override fun assertPlan(plan: Plan) {
-        assertThat(plan, equalTo(Any()))
+    override fun assertPlan(plan: Plan, lastAppliedChanges: SortedSet<PlanChange>) {
+        println("Asserting...")
+        assertThat(lastAppliedChanges.size, equalTo(1))
+        println("Plan asserted")
     }
 
 }

@@ -10,8 +10,6 @@ class DateRange(start: Date?, end: Date?) {
     var end: Date
 
     init {
-        checkNotNull(start)
-        checkNotNull(end)
         this.start = Date(start?.time ?: 0)
         this.end = Date(end?.time ?: 0)
     }
