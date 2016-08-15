@@ -16,14 +16,14 @@ public class ResourceAppearedSupervisorBehaviour extends Behaviour<TaskSuperviso
     @Override
     protected void perform(ResourceAppearedMessage message) {
         TaskSupervisorState state = getActorState();
-        List<TaskSupervisorState.TaskDiscontent> discontent = Lists.newArrayList(state.getTaskDiscontents());
+        List<TaskSupervisorState.TaskDiscontent> taskDiscontents = Lists.newArrayList(state.getTaskDiscontents());
         //firstly, task with max discontent
-        Collections.sort(discontent, (o1, o2) -> {
+        Collections.sort(taskDiscontents, (o1, o2) -> {
             Double discontent1 = o1.getDiscontent();
             Double discontent2 = o2.getDiscontent();
             return Objects.compare(discontent2, discontent1, (d2, d1) -> ((d2 == null) ? 1 : (d1 == null ? 1 : d2.compareTo(d1))));
         });
-        List<ActorRef> tasks = discontent.stream()
+        List<ActorRef> tasks = taskDiscontents.stream()
                 .map(TaskSupervisorState.TaskDiscontent::getTaskActor)
                 .collect(Collectors.toList());
         sendToAll(tasks, message);

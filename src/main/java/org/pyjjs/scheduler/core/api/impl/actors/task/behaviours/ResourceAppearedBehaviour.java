@@ -2,17 +2,20 @@ package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours;
 
 import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.messages.ResourceAppearedMessage;
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState;
-import org.pyjjs.scheduler.core.api.impl.actors.task.messages.IFindResourceMessage;
+import org.pyjjs.scheduler.core.api.impl.actors.task.messages.IFindAnyPlacementMessage;
 
 public class ResourceAppearedBehaviour extends TaskBehaviour<ResourceAppearedMessage> {
 
     @Override
     protected void perform(ResourceAppearedMessage message) {
         TaskActorState state = getActorState();
-        Double discontent = state.getDiscontent();
-        if(discontent == null || discontent != 0) {
-            sendToResources(new IFindResourceMessage(getActorRef()));
+        if(hasNotPlacement(state)) {
+            send(message.getResourceRef(), new IFindAnyPlacementMessage(getActorRef()));
         }
+    }
+
+    private boolean hasNotPlacement(TaskActorState taskActorState) {
+        return taskActorState.getDiscontent() == null;
     }
 
     @Override

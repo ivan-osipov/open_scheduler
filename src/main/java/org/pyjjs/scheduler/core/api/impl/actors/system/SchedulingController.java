@@ -15,6 +15,7 @@ public class SchedulingController extends BehaviourBasedActor<SchedulingControll
     public SchedulingController(SchedulingListener listeners) {
         SchedulingControllerState state = getCopyOfActorState();
         state.setSchedulingListeners(Sets.newHashSet(listeners));
+        state.setInitialized(true);
         updateActorState(state);
     }
 

@@ -16,6 +16,7 @@ public class ModificationController extends BehaviourBasedActor<ModificationCont
         ModificationControllerState state = getCopyOfActorState();
         state.setTaskSupervisor(taskSupervisor);
         state.setResourceSupervisor(resourceSupervisor);
+        state.setInitialized(true);
         updateActorState(state);
     }
 

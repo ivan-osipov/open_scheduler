@@ -12,7 +12,9 @@ public class TaskSupervisor extends BehaviourBasedActor<TaskSupervisorState> {
 
     @Override
     protected TaskSupervisorState getInitialState() {
-        return new TaskSupervisorState(getContext());
+        TaskSupervisorState taskSupervisorState = new TaskSupervisorState(getContext());
+        taskSupervisorState.setInitialized(true);
+        return taskSupervisorState;
     }
 
     @Override

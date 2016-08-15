@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorState;
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorStateInteraction;
 import org.pyjjs.scheduler.core.api.impl.actors.common.StateOrientedActor;
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.InitEntityAgentMessage;
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.Message;
 
 import java.util.Map;
@@ -11,10 +12,6 @@ import java.util.Map;
 public abstract class BehaviourBasedActor<T extends ActorState> extends StateOrientedActor<T> {
 
     private Map<Class<? extends Message>, Behaviour<T, ? extends Message>> behaviours = Maps.newHashMap();
-
-    private void addBehaviour(Behaviour<T, ? extends Message> behaviour) {
-        behaviours.put(behaviour.processMessage(), behaviour);
-    }
 
     protected <B extends Behaviour<T, ? extends Message>> void addBehaviour(Class<B> behaviourClass) {
         Behaviour<T, ? extends Message> behaviour;
@@ -24,6 +21,10 @@ public abstract class BehaviourBasedActor<T extends ActorState> extends StateOri
         } catch (Exception e) {
             LOG.error("Developer error:", e);
         }
+    }
+
+    private void addBehaviour(Behaviour<T, ? extends Message> behaviour) {
+        behaviours.put(behaviour.processMessage(), behaviour);
     }
 
     @Override
@@ -36,13 +37,13 @@ public abstract class BehaviourBasedActor<T extends ActorState> extends StateOri
 
     @Override
     public void onReceive(Object o) throws Exception {
-        if(o instanceof Message) {
-            Message castedMessage = (Message) o;
+        if (checkAbilityToHandle(o)) {
+            Message message = (Message) o;
 
-            for (Map.Entry<Class<? extends Message>, Behaviour<T, ? extends Message>> behaviourEntry : behaviours.entrySet()) {
-                if(behaviourEntry.getKey().isAssignableFrom(o.getClass())) {
-                    Behaviour<T, ? extends Message> behaviour = behaviourEntry.getValue();
-                    if (behaviour != null) {
+            behaviours.entrySet().stream()
+                    .filter(behaviourEntry -> behaviourEntry.getKey().isAssignableFrom(o.getClass()) && behaviourEntry.getValue() != null)
+                    .forEach(behaviourEntry -> {
+                        Behaviour<T, ? extends Message> behaviour = behaviourEntry.getValue();
                         behaviour.setActorStateInteraction(new ActorStateInteraction<T>() {
                             @Override
                             public T getActorState() {
@@ -54,11 +55,17 @@ public abstract class BehaviourBasedActor<T extends ActorState> extends StateOri
                                 updateActorState(actorState);
                             }
                         });
-                        behaviour.perform(castMessage(castedMessage));
-                    }
-                }
-            }
+                        behaviour.perform(castMessage(message));
+                    });
         }
+    }
+
+    private boolean checkAbilityToHandle(Object o) {
+        ActorState actorState = getCopyOfActorState();
+        if(actorState.isInitialized() && (o instanceof Message)) return true;
+        if(o instanceof InitEntityAgentMessage) return true;
+        getSelf().tell(o, getSender());
+        return false;
     }
 
     /**

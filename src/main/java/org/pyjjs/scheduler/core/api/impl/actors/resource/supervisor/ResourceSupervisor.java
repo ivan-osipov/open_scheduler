@@ -11,7 +11,9 @@ public class ResourceSupervisor extends BehaviourBasedActor<ResourceSupervisorSt
 
     @Override
     protected ResourceSupervisorState getInitialState() {
-        return new ResourceSupervisorState(getContext());
+        ResourceSupervisorState resourceSupervisorState = new ResourceSupervisorState(getContext());
+        resourceSupervisorState.setInitialized(true);
+        return resourceSupervisorState;
     }
 
     @Override
