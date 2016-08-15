@@ -8,13 +8,14 @@ import org.pyjjs.scheduler.core.model.Task
 import java.util.Date
 import java.util.UUID
 
-class PlanChange private constructor(val type: ChangeType) : HasTimestamp{
+class PlanChange private constructor(val type: ChangeType) : HasTimestamp {
     enum class ChangeType {
 
         INSERT, UPDATE, REMOVE
-    }
-    val id = UUID.randomUUID()
 
+    }
+
+    val id = UUID.randomUUID()
     override var timestamp: Long = Date().time
 
     val resourceUsage: ResourceUsage = ResourceUsage()

@@ -4,6 +4,7 @@ import akka.actor.ActorContext;
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorState;
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange;
 import org.pyjjs.scheduler.core.api.SchedulingListener;
+import org.pyjjs.scheduler.core.api.impl.utils.Comparators;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -13,8 +14,8 @@ public class SchedulingControllerState extends ActorState {
 
     private Set<SchedulingListener> schedulingListeners;
 
-    private SortedSet<PlanChange> planChanges = new TreeSet<>((c1, c2) -> Long.compare(c1.getTimestamp(),c2.getTimestamp()));
-    
+    private SortedSet<PlanChange> planChanges = new TreeSet<>(Comparators.TIMESTAMP_COMPARATOR);
+
     private boolean checkOffersAreScheduled = false;
 
     public SchedulingControllerState(ActorContext actorContext) {

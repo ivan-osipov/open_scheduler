@@ -13,7 +13,7 @@ import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 class SchedulerIsWorking: BaseSchedulerTest() {
 
 
-    @Test(timeout = 10000)
+    @Test()
     fun schedulerIsWorking() {
         val resource = Resource()
         resource.capacity = 1.0
@@ -29,10 +29,9 @@ class SchedulerIsWorking: BaseSchedulerTest() {
 
     override fun assertPlan(plan: Plan, lastAppliedChanges: SortedSet<PlanChange>) {
         println("Asserting...")
-        assertThat(plan.resourceUsages.size, equalTo(1))
+        assertThat(plan.resourceUsages.size, equalTo(2))
         plan.resourceUsages.forEach { println(it.id) }
-        print("---")
-        lastAppliedChanges.forEach { println(it.id) }
+        println("Plan version: ${plan.version}")
         println("Plan asserted")
     }
 

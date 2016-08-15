@@ -132,9 +132,9 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
                 .tell(message, getActorRef());
     }
 
-    public void scheduleNotification(Message notification) {
+    public void scheduleNotification(Message notification, String timeKey) {
         Config schedulerConfig = getActorState().getActorSystem().settings().config();
-        long notificationDelayInMillis = schedulerConfig.getLong(SystemConfigKeys.DEFAULT_NOTIFICATION_DELAY_IN_MILLIS_KEY);
+        long notificationDelayInMillis = schedulerConfig.getLong(timeKey);
         sendByDelay(notification, notificationDelayInMillis, TimeUnit.MILLISECONDS);
     }
 

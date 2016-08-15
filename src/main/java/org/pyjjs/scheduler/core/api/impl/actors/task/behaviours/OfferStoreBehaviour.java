@@ -26,7 +26,7 @@ public class OfferStoreBehaviour extends Behaviour<TaskActorState, OfferMessage>
     }
 
     private void scheduleOffersCheck(TaskActorState actorState) {
-        scheduleNotification(new CheckOffersMessage(getActorRef()));
+        scheduleNotification(new CheckOffersMessage(getActorRef()),  SystemConfigKeys.DEFAULT_NOTIFICATION_DELAY_IN_MILLIS_KEY);
         actorState.setCheckOffersScheduled(true);
     }
 

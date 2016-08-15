@@ -11,6 +11,7 @@ abstract class  ChangeCommitter {
 
     fun commit(plan: Plan, change: PlanChange): Plan {
         plan.lastUpdate = Math.max(plan.lastUpdate, change.timestamp)
+        plan.version++
         return invoke(plan, change)
     }
 
