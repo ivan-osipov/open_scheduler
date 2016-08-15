@@ -13,7 +13,7 @@ import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 class SchedulerIsWorking: BaseSchedulerTest() {
 
 
-    @Test()
+    @Test
     fun schedulerIsWorking() {
         val resource = Resource()
         resource.capacity = 1.0

@@ -4,8 +4,6 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
-import akka.dispatch.Futures;
-import akka.dispatch.OnSuccess;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.typesafe.config.Config;
@@ -15,10 +13,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.resource.ResourceActor;
 import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.ResourceSupervisor;
 import org.pyjjs.scheduler.core.api.impl.actors.system.ModificationController;
 import org.pyjjs.scheduler.core.api.impl.actors.system.SchedulingController;
-import org.pyjjs.scheduler.core.api.impl.actors.system.messages.EntityCreatedMessage;
-import org.pyjjs.scheduler.core.api.impl.actors.system.messages.EntityRemovedMessage;
-import org.pyjjs.scheduler.core.api.impl.actors.system.messages.EntityUpdatedMessage;
-import org.pyjjs.scheduler.core.api.impl.actors.system.messages.PlanUpdatedMessage;
+import org.pyjjs.scheduler.core.api.impl.actors.system.messages.*;
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActor;
 import org.pyjjs.scheduler.core.api.impl.actors.task.supervisor.TaskSupervisor;
 import org.pyjjs.scheduler.core.api.PlanMergingController;
@@ -31,9 +26,6 @@ import org.pyjjs.scheduler.core.model.Resource;
 import org.pyjjs.scheduler.core.model.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scala.concurrent.ExecutionContext;
-import scala.concurrent.Future;
-import scala.concurrent.Promise;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -91,22 +83,19 @@ public class SchedulerImpl implements Scheduler {
 
             @Override
             public void onCreate(IdentifiableObject entity) {
-                EntityCreatedMessage msg = new EntityCreatedMessage();
-                msg.setEntity(entity);
+                EntityCreatedMessage msg = new EntityCreatedMessage(entity);
                 modificationController.tell(msg, ActorRef.noSender());
             }
 
             @Override
             public void onUpdate(IdentifiableObject entity) {
-                EntityUpdatedMessage msg = new EntityUpdatedMessage();
-                msg.setEntity(entity);
+                EntityUpdatedMessage msg = new EntityUpdatedMessage(entity);
                 modificationController.tell(msg, ActorRef.noSender());
             }
 
             @Override
             public void onRemove(IdentifiableObject entity) {
-                EntityRemovedMessage msg = new EntityRemovedMessage();
-                msg.setEntity(entity);
+                EntityRemovedMessage msg = new EntityRemovedMessage(entity);
                 modificationController.tell(msg, ActorRef.noSender());
             }
         });
@@ -143,8 +132,7 @@ public class SchedulerImpl implements Scheduler {
 
     private void notifyModificationControllerAboutExistedEntities() {
         for (IdentifiableObject identifiableObject : dataSource) {
-            EntityCreatedMessage entityCreatedMessage = new EntityCreatedMessage();
-            entityCreatedMessage.setEntity(identifiableObject);
+            EntityCreatedMessage entityCreatedMessage = new EntityCreatedMessage(identifiableObject);
             modificationController.tell(entityCreatedMessage, ActorRef.noSender());
         }
     }

@@ -8,10 +8,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.task.messages.CheckOffersMessage
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange;
 import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 
 public class OffersCheckBehaviour extends Behaviour<TaskActorState,CheckOffersMessage> {
