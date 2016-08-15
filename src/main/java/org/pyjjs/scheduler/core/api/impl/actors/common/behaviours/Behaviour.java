@@ -38,7 +38,7 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
     }
 
     protected void sendToAll(Collection<ActorRef> receivers, Message message) {
-        receivers.stream().forEach((receiver) -> send(receiver, message));
+        receivers.forEach((receiver) -> send(receiver, message));
     }
 
     protected ActorRef getActorRef() {
@@ -130,6 +130,12 @@ public abstract class Behaviour<T extends ActorState, M extends Message> {
                 .system()
                 .actorSelection("user/tasks/*")
                 .tell(message, getActorRef());
+    }
+
+    public void scheduleNotification(Message notification) {
+        Config schedulerConfig = getActorState().getActorSystem().settings().config();
+        long notificationDelayInMillis = schedulerConfig.getLong(SystemConfigKeys.DEFAULT_NOTIFICATION_DELAY_IN_MILLIS_KEY);
+        sendByDelay(notification, notificationDelayInMillis, TimeUnit.MILLISECONDS);
     }
 
     protected abstract Class<M> processMessage();

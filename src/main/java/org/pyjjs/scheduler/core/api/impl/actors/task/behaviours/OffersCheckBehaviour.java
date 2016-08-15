@@ -2,8 +2,10 @@ package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours;
 
 import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour;
 import org.pyjjs.scheduler.core.api.impl.actors.resource.messages.OfferMessage;
+import org.pyjjs.scheduler.core.api.impl.actors.system.messages.PlanUpdatedMessage;
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState;
 import org.pyjjs.scheduler.core.api.impl.actors.task.messages.CheckOffersMessage;
+import org.pyjjs.scheduler.core.api.impl.changes.PlanChange;
 import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys;
 
 import java.io.IOException;
@@ -24,6 +26,14 @@ public class OffersCheckBehaviour extends Behaviour<TaskActorState,CheckOffersMe
         if(optionalOffer.isPresent()) {
             OfferMessage offer = optionalOffer.get();
             printMessage(LocaleMessageKeys.TASK_FOUND_BEST_OFFER, getActorLocalName(), offer.getPlacingPrice(), getActorLocalName(offer.getSender()));
+
+            //DEMO REACT
+            PlanUpdatedMessage planUpdatedMessage = new PlanUpdatedMessage();
+            planUpdatedMessage.getPlanChanges().add(PlanChange.Companion.insert()
+                    .task(getActorState().getSource())
+                    .resource(offer.getResource()));
+            getActorState().getActorSystem().eventStream()
+                    .publish(planUpdatedMessage);
             //TODO react
         } else {
             printMessage(LocaleMessageKeys.TASK_OFFER_NOT_FOUND, getActorLocalName());

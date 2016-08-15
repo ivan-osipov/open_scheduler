@@ -26,9 +26,7 @@ public class OfferStoreBehaviour extends Behaviour<TaskActorState, OfferMessage>
     }
 
     private void scheduleOffersCheck(TaskActorState actorState) {
-        Config schedulerConfig = getActorState().getActorSystem().settings().config();
-        long notificationDelayInMillis = schedulerConfig.getLong(SystemConfigKeys.DEFAULT_NOTIFICATION_DELAY_IN_MILLIS_KEY);
-        sendByDelay(new CheckOffersMessage(getActorRef()), notificationDelayInMillis, TimeUnit.MILLISECONDS);
+        scheduleNotification(new CheckOffersMessage(getActorRef()));
         actorState.setCheckOffersScheduled(true);
     }
 

@@ -16,19 +16,23 @@ class SchedulerIsWorking: BaseSchedulerTest() {
     @Test(timeout = 10000)
     fun schedulerIsWorking() {
         val resource = Resource()
-        resource.id = UUID.randomUUID()
         resource.capacity = 1.0
 
         val task = Task()
-        task.id = UUID.randomUUID()
         task.deadline = Date()
 
-        saveEntities(resource, task)
+        val task2 = Task()
+        task2.deadline = Date()
+
+        saveEntities(resource, task, task2)
     }
 
     override fun assertPlan(plan: Plan, lastAppliedChanges: SortedSet<PlanChange>) {
         println("Asserting...")
-        assertThat(lastAppliedChanges.size, equalTo(1))
+        assertThat(plan.resourceUsages.size, equalTo(1))
+        plan.resourceUsages.forEach { println(it.id) }
+        print("---")
+        lastAppliedChanges.forEach { println(it.id) }
         println("Plan asserted")
     }
 

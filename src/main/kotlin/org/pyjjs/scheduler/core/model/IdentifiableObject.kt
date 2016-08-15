@@ -4,5 +4,5 @@ import java.util.UUID
 
 open class IdentifiableObject {
 
-    var id: UUID? = null
+    var id: UUID? = UUID.randomUUID()
 }

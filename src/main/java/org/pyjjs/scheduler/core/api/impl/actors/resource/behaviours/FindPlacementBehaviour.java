@@ -12,6 +12,7 @@ public class FindPlacementBehaviour extends Behaviour<ResourceActorState, IFindR
         ResourceActorState resourceActorState = getActorState();
         OfferMessage answer = new OfferMessage(getActorRef());
         answer.setPlacingPrice(resourceActorState.getPlacingPrice());
+        answer.setResource(getActorState().getSource());
         answer(message, answer);
     }
 
