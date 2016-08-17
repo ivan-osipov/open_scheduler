@@ -27,7 +27,11 @@ public class LocaleResolver {
 
     public String getString(String key, Object... params) {
         String rawString = properties.getProperty(key);
-        return String.format(rawString, params);
+        try {
+            return String.format(new String(rawString.getBytes("ISO-8859-1"), "UTF-8"), params);
+        } catch (UnsupportedEncodingException e) {
+            throw new AssertionError("Encoding is incorrect",e);
+        }
     }
 
     public static LocaleResolver get(LangResolver langResolver) throws LocaleNotFoundException {

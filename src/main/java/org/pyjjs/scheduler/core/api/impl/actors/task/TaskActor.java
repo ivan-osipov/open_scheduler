@@ -19,7 +19,6 @@ public class TaskActor extends BehaviourBasedActor<TaskActorState> {
     private void fillBehaviours() {
         addBehaviour(TaskInitBehaviour.class);
         addBehaviour(ResourceAppearedBehaviour.class);
-        addBehaviour(FoundResourceBehaviour.class);
         addBehaviour(OfferStoreBehaviour.class);
         addBehaviour(OffersCheckBehaviour.class);
     }

@@ -9,6 +9,9 @@ import java.util.*
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.CoreMatchers.*
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
+import org.pyjjs.scheduler.core.model.ResourceCriteria
+import org.pyjjs.scheduler.core.model.criteria.StrictCriterion
+import org.pyjjs.scheduler.core.model.criteria.operations.bool.Equals
 
 class SchedulerIsWorking: BaseSchedulerTest() {
 
@@ -20,9 +23,12 @@ class SchedulerIsWorking: BaseSchedulerTest() {
 
         val task = Task()
         task.deadline = Date()
+        task.resourceCriteria = ResourceCriteria()
+        task.resourceCriteria.strictCriterion.add(StrictCriterion(2.0,"capacity", Equals()))
 
         val task2 = Task()
         task2.deadline = Date()
+        task2.resourceCriteria.strictCriterion.add(StrictCriterion(1.0,"capacity", Equals()))
 
         saveEntities(resource, task, task2)
     }

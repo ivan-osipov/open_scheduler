@@ -10,7 +10,7 @@ public class ResourceAppearedBehaviour extends TaskBehaviour<ResourceAppearedMes
     protected void perform(ResourceAppearedMessage message) {
         TaskActorState state = getActorState();
         if(hasNotPlacement(state)) {
-            send(message.getResourceRef(), new IFindAnyPlacementMessage(getActorRef()));
+            send(message.getResourceRef(), new IFindAnyPlacementMessage(getActorRef(), state.getSource().getResourceCriteria()));
         }
     }
 

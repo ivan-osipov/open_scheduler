@@ -9,6 +9,7 @@ class Task : IdentifiableObject() {
     var minStartDate: Date? = null
     var deadline: Date? = null
     var taskResult: TaskResult? = null
+    var resourceCriteria: ResourceCriteria = ResourceCriteria()
 
     var successors: Set<Task> = HashSet()
     var predecessors: Set<Task> = HashSet()

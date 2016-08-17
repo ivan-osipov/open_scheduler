@@ -3,7 +3,10 @@ package org.pyjjs.scheduler.core.api.impl.actors.resource;
 import akka.actor.ActorContext;
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorState;
 import org.pyjjs.scheduler.core.api.impl.actors.common.SourceBasedActorState;
+import org.pyjjs.scheduler.core.api.impl.actors.resource.placing.JitPlacementFinder;
+import org.pyjjs.scheduler.core.api.impl.actors.resource.placing.PlacementFinder;
 import org.pyjjs.scheduler.core.api.impl.actors.resource.placing.TimeLine;
+import org.pyjjs.scheduler.core.api.impl.actors.resource.placing.TimeSheet;
 import org.pyjjs.scheduler.core.model.Resource;
 
 import java.util.HashSet;
@@ -15,7 +18,9 @@ public class ResourceActorState extends SourceBasedActorState<Resource> {
 
     private Double placingPrice = 0d;
 
-    private Set<TimeLine> timeLines = new HashSet<>();
+    private TimeSheet timeSheet = new TimeSheet();
+
+    private PlacementFinder placementFinder = new JitPlacementFinder();
 
     protected ResourceActorState(ActorContext actorContext) {
         super(actorContext);
@@ -29,15 +34,12 @@ public class ResourceActorState extends SourceBasedActorState<Resource> {
         this.placingPrice = placingPrice;
     }
 
-    public void setCapacity(int capacity) {
-        timeLines.clear();
-        for (int i = 0; i < capacity; i++) {
-            timeLines.add(new TimeLine());
-        }
+    public TimeSheet getTimeSheet() {
+        return timeSheet;
     }
 
-    public int getCapacity() {
-        return timeLines.size();
+    public void setTimeSheet(TimeSheet timeSheet) {
+        this.timeSheet = timeSheet;
     }
 
     @Override
