@@ -8,6 +8,7 @@ import java.util.*
 
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.CoreMatchers.*
+import org.pyjjs.scheduler.core.ResourceAvailability
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.model.ResourceCriteria
 import org.pyjjs.scheduler.core.model.criteria.StrictCriterion
@@ -19,7 +20,8 @@ class SchedulerIsWorking: BaseSchedulerTest() {
     @Test
     fun schedulerIsWorking() {
         val resource = Resource()
-        resource.capacity = 1.0
+        resource.resourceAvailabilityTable.addResourceAvailability(ResourceAvailability(0, 10, capacity = 2.0))
+        resource.resourceAvailabilityTable.addResourceAvailability(ResourceAvailability(15, 25, capacity = 1.0))
 
         val task = Task()
         task.deadline = Date()

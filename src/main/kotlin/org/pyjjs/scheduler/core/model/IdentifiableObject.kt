@@ -3,6 +3,5 @@ package org.pyjjs.scheduler.core.model
 import java.util.UUID
 
 open class IdentifiableObject {
-
-    var id: UUID? = UUID.randomUUID()
+    var id: UUID = UUID.randomUUID()
 }

@@ -11,7 +11,7 @@ class NotifyAboutChangesBehaviour: Behaviour<SchedulingControllerState, CheckNew
         val detachedActorState = actorState
 
         val changes = ImmutableSortedSet.copyOf(Comparators.TIMESTAMP_COMPARATOR, detachedActorState.planChanges)
-        detachedActorState.schedulingListeners.forEach { it.onChange(changes) }
+        detachedActorState.schedulingListeners?.forEach { it.onChange(changes) }
         detachedActorState.planChanges.clear()
         detachedActorState.setCheckOffersAreScheduled(false)
 
