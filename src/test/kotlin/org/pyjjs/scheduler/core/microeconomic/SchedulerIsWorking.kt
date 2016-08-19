@@ -26,11 +26,11 @@ class SchedulerIsWorking: BaseSchedulerTest() {
         val task = Task()
         task.deadline = Date()
         task.resourceCriteria = ResourceCriteria()
-        task.resourceCriteria.strictCriterion.add(StrictCriterion(2.0,"capacity", Equals()))
+        task.resourceCriteria.strictCriterion.add(StrictCriterion("resourceAvailabilityTable.minAvailableCapacity", Equals(), 2.0))
 
         val task2 = Task()
         task2.deadline = Date()
-        task2.resourceCriteria.strictCriterion.add(StrictCriterion(1.0,"capacity", Equals()))
+        task2.resourceCriteria.strictCriterion.add(StrictCriterion("resourceAvailabilityTable.minAvailableCapacity", Equals(), 1.0))
 
         saveEntities(resource, task, task2)
     }
