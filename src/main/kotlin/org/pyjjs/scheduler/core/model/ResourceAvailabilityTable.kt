@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.model
 
-import org.pyjjs.scheduler.core.ResourceAvailability
+import org.pyjjs.scheduler.core.model.ResourceAvailability
 import org.pyjjs.scheduler.core.api.impl.utils.Comparators
 import java.util.*
 import org.pyjjs.scheduler.core.nullsafety.*

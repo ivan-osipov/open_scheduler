@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.api.impl.utils
 
-import org.pyjjs.scheduler.core.ResourceAvailability
+import org.pyjjs.scheduler.core.model.ResourceAvailability
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.model.ResourceUsage
 

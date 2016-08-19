@@ -1,7 +1,6 @@
 package org.pyjjs.scheduler.core.api.impl.actors.common
 
 import akka.actor.UntypedActor
-import org.pyjjs.scheduler.core.api.impl.actors.Actor
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.InitEntityAgentMessage
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.Message
 import org.slf4j.Logger

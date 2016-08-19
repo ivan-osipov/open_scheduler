@@ -4,7 +4,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.assertThat
 import org.junit.Test
-import org.pyjjs.scheduler.core.ResourceAvailability
+import org.pyjjs.scheduler.core.model.ResourceAvailability
 import org.pyjjs.scheduler.core.model.ResourceAvailabilityTable
 
 class InternalStateUpdateTests {

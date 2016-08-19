@@ -8,7 +8,7 @@ import java.util.*
 
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.CoreMatchers.*
-import org.pyjjs.scheduler.core.ResourceAvailability
+import org.pyjjs.scheduler.core.model.ResourceAvailability
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.model.ResourceCriteria
 import org.pyjjs.scheduler.core.model.criteria.StrictCriterion
@@ -26,11 +26,11 @@ class SchedulerIsWorking: BaseSchedulerTest() {
         val task = Task()
         task.deadline = Date()
         task.resourceCriteria = ResourceCriteria()
-        task.resourceCriteria.strictCriterion.add(StrictCriterion("resourceAvailabilityTable.minAvailableCapacity", Equals(), 2.0))
+        task.resourceCriteria.strictCriterion.add(StrictCriterion("r.resourceAvailabilityTable.minAvailableCapacity", Equals(), 2.0))
 
         val task2 = Task()
         task2.deadline = Date()
-        task2.resourceCriteria.strictCriterion.add(StrictCriterion("resourceAvailabilityTable.minAvailableCapacity", Equals(), 1.0))
+        task2.resourceCriteria.strictCriterion.add(StrictCriterion("r.resourceAvailabilityTable.minAvailableCapacity", Equals(), 1.0))
 
         saveEntities(resource, task, task2)
     }
