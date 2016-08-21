@@ -6,8 +6,8 @@ class TaskObjectiveFunction : ObjectiveFunction<Task>() {
 
     override fun calculate(source: Task, context: Context): Double {
         val proposedTimeInMills = context.lockup(PROPOSED_LEAD_TIME_IN_MILLS) as Long?
-        val deadlineInMills = source.deadline?.time ?: Long.MAX_VALUE
-        return (calcDelayTime(proposedTimeInMills, deadlineInMills) + calcLeadTime(proposedTimeInMills, deadlineInMills)).toDouble()
+        val deadline = source.descriptor.deadline ?: Long.MAX_VALUE
+        return (calcDelayTime(proposedTimeInMills, deadline) + calcLeadTime(proposedTimeInMills, deadline)).toDouble()
     }
 
     private fun calcDelayTime(proposedLeadTime: Long?, deadline: Long): Long {

@@ -8,7 +8,7 @@ import org.pyjjs.scheduler.core.model.Resource
 
 class ResourceActor : BehaviourBasedActor<ResourceActorState>(), HasObjectiveFunction {
 
-    override fun createInitialState(): ResourceActorState = ResourceActorState(context, Resource())
+    override fun createInitialState(): ResourceActorState = ResourceActorState(context)
 
     override fun calculateObjectiveFunction(): Double {
         return 0.0

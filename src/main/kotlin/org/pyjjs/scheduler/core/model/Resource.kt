@@ -1,7 +1,5 @@
 package org.pyjjs.scheduler.core.model
 
-class Resource : IdentifiableObject() {
+import org.pyjjs.scheduler.core.placement.time.TimeSheet
 
-    val resourceAvailabilityTable: ResourceAvailabilityTable = ResourceAvailabilityTable()
-
-}
+class Resource(val timeSheet: TimeSheet = TimeSheet()) : IdentifiableObject()

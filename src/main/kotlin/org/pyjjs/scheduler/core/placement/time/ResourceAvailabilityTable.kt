@@ -1,6 +1,6 @@
-package org.pyjjs.scheduler.core.model
+package org.pyjjs.scheduler.core.placement.time
 
-import org.pyjjs.scheduler.core.model.ResourceAvailability
+import org.pyjjs.scheduler.core.placement.time.ResourceAvailability
 import org.pyjjs.scheduler.core.api.impl.utils.Comparators
 import java.util.*
 import org.pyjjs.scheduler.core.nullsafety.*
@@ -37,4 +37,6 @@ class ResourceAvailabilityTable {
         minAvailableCapacity = null
         maxAvailableCapacity = null
     }
+
+    fun isEmpty() = resourceAvailabilities.isEmpty()
 }

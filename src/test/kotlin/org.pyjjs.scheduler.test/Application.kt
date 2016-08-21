@@ -1,6 +1,7 @@
 package org.pyjjs.scheduler.test
 
 import org.pyjjs.scheduler.core.api.SchedulerFactory
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskDescriptor
 import org.pyjjs.scheduler.core.model.Resource
 import org.pyjjs.scheduler.core.model.Task
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,11 +35,26 @@ class Application {
             resource0.id = UUID.randomUUID()
             dataSource.add(resource0)
 
-            val task = Task()
+            val task = Task(TaskDescriptor(
+                    laborContent = 10.0,
+                    minCapacity = 1.0,
+                    maxCapacity = 3.0,
+                    minDuration = 1,
+                    maxDuration = 5))
             task.id = UUID.randomUUID()
-            val task2 = Task()
+            val task2 = Task(TaskDescriptor(
+                    laborContent = 10.0,
+                    minCapacity = 1.0,
+                    maxCapacity = 3.0,
+                    minDuration = 1,
+                    maxDuration = 5))
             task2.id = UUID.randomUUID()
-            val task3 = Task()
+            val task3 = Task(TaskDescriptor(
+                    laborContent = 10.0,
+                    minCapacity = 1.0,
+                    maxCapacity = 3.0,
+                    minDuration = 1,
+                    maxDuration = 5))
             task3.id = UUID.randomUUID()
             dataSource.add(task)
             Thread.sleep(2000L)

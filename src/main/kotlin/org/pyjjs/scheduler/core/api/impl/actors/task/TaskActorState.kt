@@ -8,7 +8,7 @@ import org.pyjjs.scheduler.core.model.Task
 
 import java.util.HashSet
 
-class TaskActorState(actorContext: ActorContext) : SourceBasedActorState<Task>(actorContext, Task()) {
+class TaskActorState(actorContext: ActorContext) : SourceBasedActorState<Task>(actorContext) {
 
     private val offers = HashSet<OfferMessage>()
     private var checkOffersScheduled = false

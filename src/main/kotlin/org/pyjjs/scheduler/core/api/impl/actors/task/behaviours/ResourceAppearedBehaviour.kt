@@ -9,7 +9,10 @@ class ResourceAppearedBehaviour : TaskBehaviour<ResourceAppearedMessage>() {
     override fun perform(message: ResourceAppearedMessage) {
         val state = actorState
         if (hasNotPlacement(state)) {
-            send(message.resourceRef, IFindAnyPlacementMessage(actorRef, state.source.resourceCriteria))
+            send(message.resourceRef, IFindAnyPlacementMessage(
+                    actorRef,
+                    state.source.descriptor,
+                    state.source.resourceCriteria))
         }
     }
 

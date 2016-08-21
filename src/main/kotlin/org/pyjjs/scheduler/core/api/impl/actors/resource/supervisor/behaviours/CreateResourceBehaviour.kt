@@ -15,6 +15,11 @@ class CreateResourceBehaviour : Behaviour<ResourceSupervisorState, EntityCreated
     override fun perform(message: EntityCreatedMessage) {
         val resource = message.entity as Resource
         val actorState = actorState
+        if(!isValid(resource)) {
+            actorState.invalidResources.add(resource)
+            saveActorState(actorState)
+            return
+        }
 
         val newResourceActorRef = createResourceActor()
         send(newResourceActorRef, ResourceInitMessage(actorRef, resource))
@@ -23,6 +28,18 @@ class CreateResourceBehaviour : Behaviour<ResourceSupervisorState, EntityCreated
         saveActorState(actorState)
 
         notifyTasksAboutNewResource(newResourceActorRef, resource)
+    }
+
+    private fun isValid(resource: Resource): Boolean {
+        try {
+            checkNotNull(resource.timeSheet, {"Resource should have availability table"})
+            checkNotNull(resource.timeSheet.resourceAvailabilityTable, {"Resource should have availability table"})
+            check(!resource.timeSheet.resourceAvailabilityTable.isEmpty(), {"Resource should have records in availability table"})
+            return true
+        } catch (e: Exception) {
+            BEHAVIOUR_LOG.warn("Resource with id: ${resource.id} is invalid. Reason: ${e.message}")
+            return false
+        }
     }
 
     private fun notifyTasksAboutNewResource(resourceActorRef: ActorRef, resource: Resource) {

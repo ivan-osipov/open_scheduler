@@ -1,14 +1,11 @@
 package org.pyjjs.scheduler.core.model
 
-import java.util.Date
-import java.util.HashSet
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskDescriptor
+import java.util.*
 
-class Task : IdentifiableObject() {
+class Task(var descriptor: TaskDescriptor) : IdentifiableObject() {
 
-    var duration: Long? = null
-    var minStartDate: Date? = null
-    var deadline: Date? = null
-    var taskResult: TaskResult? = null
+    var result: TaskResult? = null
     var resourceCriteria: ResourceCriteria = ResourceCriteria()
 
     var successors: Set<Task> = HashSet()

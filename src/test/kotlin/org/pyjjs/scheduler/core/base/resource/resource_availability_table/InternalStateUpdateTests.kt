@@ -1,11 +1,11 @@
-package org.pyjjs.scheduler.core.microeconomic.base.resource.resource_availability_table
+package org.pyjjs.scheduler.core.base.resource.resource_availability_table
 
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.nullValue
 import org.junit.Assert.assertThat
 import org.junit.Test
-import org.pyjjs.scheduler.core.model.ResourceAvailability
-import org.pyjjs.scheduler.core.model.ResourceAvailabilityTable
+import org.pyjjs.scheduler.core.placement.time.ResourceAvailability
+import org.pyjjs.scheduler.core.placement.time.ResourceAvailabilityTable
 
 class InternalStateUpdateTests {
     @Test

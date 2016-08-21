@@ -1,4 +1,4 @@
-package org.pyjjs.scheduler.core.microeconomic
+package org.pyjjs.scheduler.core
 
 import org.junit.After
 import org.junit.Before

@@ -9,6 +9,7 @@ class ResourceInitBehaviour : Behaviour<ResourceActorState, ResourceInitMessage>
     override fun perform(message: ResourceInitMessage) {
         val resourceActorState = actorState
         resourceActorState.source = message.source
+        resourceActorState.timeSheet = message.source.timeSheet
         resourceActorState.isInitialized = true
         saveActorState(resourceActorState)
     }
