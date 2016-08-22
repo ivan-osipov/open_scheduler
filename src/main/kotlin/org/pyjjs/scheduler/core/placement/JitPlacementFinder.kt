@@ -11,7 +11,7 @@ class JitPlacementFinder : PlacementFinder {
         if(timeSheet.freeLaborContent < 1) {
             return Placement(Placement.Type.IMPOSSIBLY)
         }
-
+        //TODO: check task restrictions
         val affectedFreeTimes = HashSet<TimePart>()
         val offeredFreeTimes = HashSet<TimePart>()
 

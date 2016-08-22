@@ -32,13 +32,32 @@ class TimeSheet {
 
     fun addResourceAvailability(availability: ResourceAvailability) {
         resourceAvailabilityTable.addResourceAvailability(availability)
-        val timePart = TimePart(availability.start, availability.duration, availability.capacity)
-        freeTimes.add(timePart)
-        freeLaborContent += timePart.laborContent
+        if(availability is PeriodicResourceAvailability) {
+            generateTimePartsByPeriodicAvailability(availability)
+        } else {
+            val timePart = TimePart(availability.start, availability.duration, availability.capacity)
+            freeTimes.add(timePart)
+            freeLaborContent += timePart.laborContent
+        }
+    }
+
+    private fun generateTimePartsByPeriodicAvailability(availability: PeriodicResourceAvailability) {
+        var start = availability.start
+        do {
+            val remainedTime = availability.end - start
+            val timePart = TimePart(start,
+                    duration = Math.min(remainedTime, availability.duration),
+                    capacity = availability.capacity)
+
+            freeTimes.add(timePart)
+            freeLaborContent += timePart.laborContent
+            start += availability.interval
+        } while (start < availability.end)
     }
 
     fun removeResourceAvailability(availability: ResourceAvailability) {
         resourceAvailabilityTable.removeResourceAvailability(availability)
+
         //todo remove on change
     }
 

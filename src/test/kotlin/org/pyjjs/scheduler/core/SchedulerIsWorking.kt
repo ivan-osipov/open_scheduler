@@ -29,10 +29,8 @@ class SchedulerIsWorking: BaseSchedulerTest() {
                 minCapacity = 1.0,
                 maxCapacity = 3.0,
                 minDuration = 1,
-                maxDuration = 5))
-        task.descriptor.laborContent
-        task.descriptor.deadline = 10
-        task.resourceCriteria = ResourceCriteria()
+                maxDuration = 5,
+                deadline = 10))
         task.resourceCriteria.strictCriterion.add(StrictCriterion("timeSheet.resourceAvailabilityTable.minAvailableCapacity", LessThan(), 2.0))
 
         val task2 = Task(TD(
@@ -40,8 +38,8 @@ class SchedulerIsWorking: BaseSchedulerTest() {
                 minCapacity = 1.0,
                 maxCapacity = 3.0,
                 minDuration = 1,
-                maxDuration = 5))
-        task2.descriptor.deadline = 20
+                maxDuration = 5,
+                deadline = 20))
         task2.resourceCriteria.strictCriterion.add(StrictCriterion("timeSheet.resourceAvailabilityTable.minAvailableCapacity", Equals(), 1.0))
 
         saveEntities(resource, task, task2)
