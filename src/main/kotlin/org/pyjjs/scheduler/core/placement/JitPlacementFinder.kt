@@ -12,26 +12,44 @@ class JitPlacementFinder : PlacementFinder {
             return Placement(Placement.Type.IMPOSSIBLY)
         }
 
-        val usedFreeTimes = HashSet<TimePart>()
+        val affectedFreeTimes = HashSet<TimePart>()
+        val offeredFreeTimes = HashSet<TimePart>()
 
         var remainedLaborContent = taskDescriptor.laborContent
         for (freeTime in timeSheet.freeTimes) {
-            usedFreeTimes.add(freeTime)
+            affectedFreeTimes.add(freeTime)
             if(remainedLaborContent < freeTime.laborContent) {
-                val minDuration = Math.round(remainedLaborContent / freeTime.capacity).toLong()
-                freeTime.start = freeTime.start + minDuration
-                freeTime.duration = freeTime.duration - minDuration
-                freeTime.capacity = remainedLaborContent / minDuration
+                val usedDuration = Math.round(remainedLaborContent / freeTime.capacity).toLong()
+                val usedCapacity = remainedLaborContent / usedDuration
+                val usedFreeTime = TimePart(freeTime.start, usedDuration, usedCapacity)
+                offeredFreeTimes.add(usedFreeTime)
+
+                val remainedCapacity = freeTime.capacity - usedCapacity
+                if(remainedCapacity > 0) {
+                    val remainedFreeTimeByCapacity = TimePart(
+                            freeTime.start,
+                            usedDuration,
+                            remainedCapacity)
+                    timeSheet.freeTimes.add(remainedFreeTimeByCapacity)
+                }
+
+                val unusedDuration = freeTime.duration - usedDuration
+                val remainedFreeTimeByDuration = TimePart(
+                        freeTime.start + usedDuration,
+                        unusedDuration,
+                        freeTime.capacity)
+                timeSheet.freeTimes.add(remainedFreeTimeByDuration)
                 remainedLaborContent = 0.0
                 break
             } else {
                 remainedLaborContent -= freeTime.laborContent
-                usedFreeTimes.add(freeTime)
+                offeredFreeTimes.add(freeTime)
+                if(remainedLaborContent == 0.0) break
             }
         }
-        timeSheet.freeTimes.removeAll(usedFreeTimes)
+        timeSheet.freeTimes.removeAll(affectedFreeTimes)
 
-        var penalty: Double
+        val penalty: Double
         val placementType: Placement.Type = if(remainedLaborContent == 0.0) {
             penalty = 0.0
             Placement.Type.FULL
@@ -39,7 +57,7 @@ class JitPlacementFinder : PlacementFinder {
             penalty = 1.0
             Placement.Type.PARTIAL
         }
-        val offer = Offer(Collections.unmodifiableSet(usedFreeTimes), penalty)
+        val offer = Offer(Collections.unmodifiableSet(offeredFreeTimes), penalty)
         return Placement(placementType, offer)
     }
 }

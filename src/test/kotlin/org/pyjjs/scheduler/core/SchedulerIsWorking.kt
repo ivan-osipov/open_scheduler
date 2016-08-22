@@ -21,8 +21,8 @@ class SchedulerIsWorking: BaseSchedulerTest() {
     @Test
     fun schedulerIsWorking() {
         val resource = Resource()
-        resource.timeSheet.addResourceAvailability(ResourceAvailability(0, 10, capacity = 2.0))
-        resource.timeSheet.addResourceAvailability(ResourceAvailability(15, 25, capacity = 1.0))
+        resource.timeSheet.addResourceAvailability(ResourceAvailability(0, 6, capacity = 2.0))
+        resource.timeSheet.addResourceAvailability(ResourceAvailability(15, 9, capacity = 1.0))
 
         val task = Task(TD(
                 laborContent = 10.0,

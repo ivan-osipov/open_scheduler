@@ -19,6 +19,7 @@ class FindPlacementBehaviour : Behaviour<ResourceActorState, IFindAnyPlacementMe
             val placement = resourceActorState.placementFinder
                     .findAnyPlacement(message.taskDescriptor, resourceActorState.timeSheet)
             BEHAVIOUR_LOG.info("Resource $actorLocalName found placement for ${message.taskDescriptor}: $placement")
+            BEHAVIOUR_LOG.info("Remained free times for resource $actorLocalName: ${resourceActorState.timeSheet.freeTimes}")
             val answer = when (placement.type) {
                 Placement.Type.IMPOSSIBLY -> ResourceHasNotPlacementMessage(actorRef)
                 else -> ResourceHasPlacementMessage(actorRef, placement)
