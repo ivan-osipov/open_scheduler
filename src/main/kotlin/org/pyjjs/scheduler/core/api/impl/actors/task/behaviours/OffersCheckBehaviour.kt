@@ -1,16 +1,11 @@
 package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 
-import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
-import org.pyjjs.scheduler.core.api.impl.actors.resource.messages.OfferMessage
 import org.pyjjs.scheduler.core.api.impl.actors.system.messages.PlanUpdatedMessage
-import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
 import org.pyjjs.scheduler.core.api.impl.actors.task.messages.CheckOffersMessage
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys
 
-import java.util.Optional
-
-class OffersCheckBehaviour : Behaviour<TaskActorState, CheckOffersMessage>() {
+class OffersCheckBehaviour : TaskBehaviour<CheckOffersMessage>() {
 
     override fun perform(message: CheckOffersMessage) {
         logMessage(LocaleMessageKeys.TASK_PROCESS_OFFERS, actorLocalName)

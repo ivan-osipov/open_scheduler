@@ -1,10 +1,8 @@
 package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 
-import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskInitMessage
-import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
 
-class TaskInitBehaviour : Behaviour<TaskActorState, TaskInitMessage>() {
+class TaskInitBehaviour : TaskBehaviour<TaskInitMessage>() {
 
     override fun perform(message: TaskInitMessage) {
         val taskActorState = actorState

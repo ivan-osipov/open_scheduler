@@ -17,7 +17,7 @@ class TaskActor : BehaviourBasedActor<TaskActorState>() {
         addBehaviour(ResourceAppearedBehaviour::class.java)
         addBehaviour(OfferStoreBehaviour::class.java)
         addBehaviour(OffersCheckBehaviour::class.java)
-
-        //TODO react on ResourceHasPlacementMessage, ResourceHasNotPlacementMessage
+        addBehaviour(ResourceHasPlacementBehaviour::class.java)
+        addBehaviour(ResourceHasNotPlacementBehaviour::class.java)
     }
 }
