@@ -34,6 +34,10 @@ abstract class BaseSchedulerTest: PlanRepresentative.StablePlanListener {
         schedulingSemaphore.release()
     }
 
+    fun saveEntities(entities: Collection<IdentifiableObject>) {
+        saveEntities(*entities.toTypedArray())
+    }
+
     fun saveEntities(vararg entities: IdentifiableObject) {
         for (identifiableObject in entities) {
             addEntity(identifiableObject)
