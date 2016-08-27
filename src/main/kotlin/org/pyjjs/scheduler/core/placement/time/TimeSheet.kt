@@ -7,12 +7,16 @@ class TimeSheet {
 
     var planningHorizon = java.lang.Long.MAX_VALUE
 
-    internal val resourceAvailabilityTable = ResourceAvailabilityTable()
+    val resourceAvailabilityTable = ResourceAvailabilityTable()
     val freeTimes = TreeSet<TimePart>(Comparators.TIME_PART_COMPARATOR)
     val usedTimes = TreeSet<UsedTime>(Comparators.USED_TIME_COMPARATOR)
+    var leftoverFreeTime: TimePart? = null
 
     var freeLaborContent: Double = 0.0
         private set
+
+    val hasFreeTime: Boolean
+        get() = (leftoverFreeTime == null && freeLaborContent < 1)
 
     fun findNearestFreeTime(): TimePart? {
         val freeTimeIterator = freeTimes.iterator()
@@ -30,18 +34,22 @@ class TimeSheet {
         return null
     }
 
-    fun addResourceAvailability(availability: ResourceAvailability) {
+    fun addResourceAvailability(availability: Availability) {
         resourceAvailabilityTable.addResourceAvailability(availability)
-        if(availability is PeriodicResourceAvailability) {
-            generateTimePartsByPeriodicAvailability(availability)
-        } else {
-            val timePart = TimePart(availability.start, availability.duration, availability.capacity)
-            freeTimes.add(timePart)
-            freeLaborContent += timePart.laborContent
+        when (availability) {
+            is Availability.Periodic -> generateTimePartsByPeriodicAvailability(availability)
+            is Availability.Occasional -> {
+                val timePart = TimePart(availability.start, availability.duration, availability.capacity)
+                freeTimes.add(timePart)
+                freeLaborContent += timePart.laborContent
+            }
+            is Availability.Infinity -> {
+                leftoverFreeTime = TimePart(availability.start, Long.MAX_VALUE, availability.capacity)
+            }
         }
     }
 
-    private fun generateTimePartsByPeriodicAvailability(availability: PeriodicResourceAvailability) {
+    private fun generateTimePartsByPeriodicAvailability(availability: Availability.Periodic) {
         var start = availability.start
         do {
             val remainedTime = availability.end - start
@@ -55,7 +63,7 @@ class TimeSheet {
         } while (start < availability.end)
     }
 
-    fun removeResourceAvailability(availability: ResourceAvailability) {
+    fun removeResourceAvailability(availability: Availability.Occasional) {
         resourceAvailabilityTable.removeResourceAvailability(availability)
 
         //todo remove on change

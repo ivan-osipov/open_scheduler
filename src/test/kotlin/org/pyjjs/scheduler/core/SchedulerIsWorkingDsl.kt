@@ -9,7 +9,7 @@ import org.pyjjs.scheduler.core.model.Resource
 import org.pyjjs.scheduler.core.model.Task
 import org.pyjjs.scheduler.core.model.criteria.StrictCriterion
 import org.pyjjs.scheduler.core.model.criteria.operations.bool.LessThan
-import org.pyjjs.scheduler.core.placement.time.ResourceAvailability
+import org.pyjjs.scheduler.core.placement.time.Availability
 
 class SchedulerIsWorkingDsl: BaseSchedulerDslTest() {
 
@@ -17,8 +17,8 @@ class SchedulerIsWorkingDsl: BaseSchedulerDslTest() {
     fun schedulerIsWorking() {
         dataSource {
             val resource = Resource().apply {
-                timeSheet.addResourceAvailability(ResourceAvailability(0, 6, capacity = 2.0))
-                timeSheet.addResourceAvailability(ResourceAvailability(15, 9, capacity = 1.0))
+                timeSheet.addResourceAvailability(Availability.Occasional(0, 6, capacity = 2.0))
+                timeSheet.addResourceAvailability(Availability.Occasional(15, 9, capacity = 1.0))
             }
 
             val task = Task(TaskDescriptor(

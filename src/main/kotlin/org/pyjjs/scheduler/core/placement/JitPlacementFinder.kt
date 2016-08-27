@@ -8,7 +8,7 @@ import java.util.*
 
 class JitPlacementFinder : PlacementFinder {
     override fun findAnyPlacement(taskDescriptor: TaskDescriptor, timeSheet: TimeSheet): Placement {
-        if(timeSheet.freeLaborContent < 1) {
+        if(timeSheet.hasFreeTime) {
             return Placement(Placement.Type.IMPOSSIBLY)
         }
         //TODO: check task restrictions

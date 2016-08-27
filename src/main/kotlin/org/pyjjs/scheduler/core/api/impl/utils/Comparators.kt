@@ -1,8 +1,8 @@
 package org.pyjjs.scheduler.core.api.impl.utils
 
-import org.pyjjs.scheduler.core.placement.time.ResourceAvailability
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.model.ResourceUsage
+import org.pyjjs.scheduler.core.placement.time.Availability
 import org.pyjjs.scheduler.core.placement.time.TimePart
 import org.pyjjs.scheduler.core.placement.time.UsedTime
 
@@ -21,10 +21,10 @@ object Comparators {
         }
     }
 
-    val RESOURCE_AVAILABILITY_COMPARATOR = { ru1: ResourceAvailability, ru2: ResourceAvailability ->
-        if (ru1.id == ru2.id) 0
+    val RESOURCE_AVAILABILITY_COMPARATOR = { a1: Availability, a2: Availability ->
+        if (a1.id == a2.id) 0
         else {
-            val compareResult = ru1.start.compareTo(ru2.start)
+            val compareResult = a1.start.compareTo(a2.start)
             if (compareResult == 0) 1 else compareResult
         }
     }
