@@ -4,7 +4,8 @@ import org.pyjjs.scheduler.core.api.impl.utils.Comparators
 import java.util.*
 import org.pyjjs.scheduler.core.nullsafety.*
 
-class ResourceAvailabilityTable {
+class ResourceAvailabilityTable : Cloneable {
+
     var resourceAvailabilities: MutableSet<Availability> = TreeSet(Comparators.RESOURCE_AVAILABILITY_COMPARATOR)
         private set
 
@@ -14,7 +15,7 @@ class ResourceAvailabilityTable {
     var maxAvailableCapacity: Double? = null
         private set
 
-    var leftoverInfinityAvailability: Availability.Infinity? = null;
+    var leftoverInfinityAvailability: Availability.Infinity? = null
 
     fun addResourceAvailability(availability: Availability) {
         resourceAvailabilities.add(availability)
@@ -46,4 +47,16 @@ class ResourceAvailabilityTable {
     }
 
     fun isEmpty() = resourceAvailabilities.isEmpty()
+
+    override fun clone(): Any {
+        val clone = super.clone() as ResourceAvailabilityTable
+        clone.resourceAvailabilities = resourceAvailabilities.map{ it.getCopy() }
+                .toCollection(TreeSet(Comparators.RESOURCE_AVAILABILITY_COMPARATOR))
+        clone.leftoverInfinityAvailability = leftoverInfinityAvailability?.getCopy()
+        return clone
+    }
+
+    fun getCopy(): ResourceAvailabilityTable {
+        return clone() as ResourceAvailabilityTable
+    }
 }

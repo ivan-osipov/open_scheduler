@@ -6,16 +6,11 @@ import org.pyjjs.scheduler.core.api.impl.actors.common.messages.Message
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-abstract class StateOrientedActor<T : ActorState> : UntypedActor() {
+abstract class StateOrientedActor<T : ActorState>() : UntypedActor() {
 
     protected var LOG: Logger = LoggerFactory.getLogger(javaClass)
 
-    private lateinit var actorState: T
-
-    override fun preStart() {
-        super.preStart()
-        actorState = createInitialState()
-    }
+    protected lateinit var actorState: T
 
     protected fun updateActorState(actorState: T) {
         this.actorState = actorState
@@ -44,6 +39,4 @@ abstract class StateOrientedActor<T : ActorState> : UntypedActor() {
     }
 
     abstract fun onMessage(message: Message)
-
-    protected abstract fun createInitialState(): T
 }

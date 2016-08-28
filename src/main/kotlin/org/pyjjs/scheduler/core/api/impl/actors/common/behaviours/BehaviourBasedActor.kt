@@ -4,10 +4,9 @@ import com.google.common.collect.Maps
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorState
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorStateInteraction
 import org.pyjjs.scheduler.core.api.impl.actors.common.StateOrientedActor
-import org.pyjjs.scheduler.core.api.impl.actors.common.messages.InitEntityAgentMessage
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.Message
 
-abstract class BehaviourBasedActor<T : ActorState> : StateOrientedActor<T>() {
+abstract class BehaviourBasedActor<T : ActorState>() : StateOrientedActor<T>() {
 
     private val behaviours = Maps.newHashMap<Class<out Message>, Behaviour<T, out Message>>()
 
@@ -21,7 +20,6 @@ abstract class BehaviourBasedActor<T : ActorState> : StateOrientedActor<T>() {
         behaviours.put(behaviour.processMessage(), behaviour)
     }
 
-    @Throws(Exception::class)
     override fun preStart() {
         super.preStart()
         init()

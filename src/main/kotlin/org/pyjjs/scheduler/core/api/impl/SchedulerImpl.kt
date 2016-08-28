@@ -12,6 +12,7 @@ import com.typesafe.config.ConfigFactory
 import org.pyjjs.scheduler.core.api.PlanMergingController
 import org.pyjjs.scheduler.core.api.PlanRepresentative
 import org.pyjjs.scheduler.core.api.Scheduler
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.resource.ResourceActor
 import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.ResourceSupervisor
 import org.pyjjs.scheduler.core.api.impl.actors.system.ModificationController
@@ -91,7 +92,8 @@ class SchedulerImpl @JvmOverloads constructor(override val dataSource: Observabl
         resourceSupervisor = actorSystem.actorOf(Props.create(ResourceSupervisor::class.java), "resources")
 
         schedulingController = actorSystem.actorOf(Props.create(SchedulingController::class.java, mergingController))
-        actorSystem.eventStream().subscribe(schedulingController!!, PlanUpdatedMessage::class.java)
+        actorSystem.eventStream().subscribe(schedulingController, PlanUpdatedMessage::class.java)
+        actorSystem.eventStream().subscribe(schedulingController, TaskAppearedMessage::class.java)
 
         modificationController = actorSystem.actorOf(Props.create(ModificationController::class.java, taskSupervisor, resourceSupervisor))
     }

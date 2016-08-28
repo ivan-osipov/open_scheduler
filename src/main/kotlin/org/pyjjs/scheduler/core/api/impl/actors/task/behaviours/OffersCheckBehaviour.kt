@@ -14,11 +14,11 @@ class OffersCheckBehaviour : TaskBehaviour<CheckOffersMessage>() {
         logMessage(LocaleMessageKeys.TASK_FOUND_BEST_OFFER, actorLocalName, offer!!.placingPrice, getActorLocalName(offer.sender!!))
 
         //DEMO REACT
-        val planUpdatedMessage = PlanUpdatedMessage()
-        planUpdatedMessage.planChanges.add(PlanChange.insert()
-                .task(actorState.source)
-                .resource(offer.resource!!))
-        actorState.actorSystem.eventStream().publish(planUpdatedMessage)
+//        val planUpdatedMessage = PlanUpdatedMessage()
+//        planUpdatedMessage.planChanges.add(PlanChange.insert()
+//                .task(actorState.source)
+//                .resource(offer.resource!!))
+//        actorState.actorSystem.eventStream().publish(planUpdatedMessage)
         //TODO react
     }
 

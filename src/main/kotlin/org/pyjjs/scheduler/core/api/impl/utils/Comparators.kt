@@ -16,7 +16,7 @@ object Comparators {
     val RESOURCE_USAGE_COMPARATOR = { ru1: ResourceUsage, ru2: ResourceUsage ->
         if (ru1.id == ru2.id) 0
         else {
-            val compareResult = ru1.dateRange.start.compareTo(ru2.dateRange.start)
+            val compareResult = ru1.timePart.start.compareTo(ru2.timePart.start)
             if (compareResult == 0) 1 else compareResult
         }
     }

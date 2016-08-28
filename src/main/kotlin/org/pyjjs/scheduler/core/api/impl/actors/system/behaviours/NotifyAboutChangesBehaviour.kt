@@ -8,14 +8,13 @@ import org.pyjjs.scheduler.core.api.impl.utils.Comparators
 
 class NotifyAboutChangesBehaviour: Behaviour<SchedulingControllerState, CheckNewChanges>() {
     override fun perform(message: CheckNewChanges) {
-        val detachedActorState = actorState
+        BEHAVIOUR_LOG.info("Scheduling controlled notify about changes: ${actorState.planChanges}")
+        val changes = ImmutableSortedSet.copyOf(Comparators.TIMESTAMP_COMPARATOR, actorState.planChanges)
+        actorState.schedulingListeners.forEach { it.onChange(changes) }
+        actorState.planChanges.clear()
+        actorState.setCheckOffersAreScheduled(false)
 
-        val changes = ImmutableSortedSet.copyOf(Comparators.TIMESTAMP_COMPARATOR, detachedActorState.planChanges)
-        detachedActorState.schedulingListeners?.forEach { it.onChange(changes) }
-        detachedActorState.planChanges.clear()
-        detachedActorState.setCheckOffersAreScheduled(false)
-
-        saveActorState(detachedActorState)
+        saveActorState(actorState)
     }
 
     override fun processMessage(): Class<CheckNewChanges> {

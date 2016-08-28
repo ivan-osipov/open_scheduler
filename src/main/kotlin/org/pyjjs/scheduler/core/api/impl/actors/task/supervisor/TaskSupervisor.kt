@@ -8,11 +8,10 @@ import org.slf4j.LoggerFactory
 
 class TaskSupervisor : BehaviourBasedActor<TaskSupervisorState>() {
 
-    override fun createInitialState(): TaskSupervisorState {
-            val taskSupervisorState = TaskSupervisorState(context)
-            taskSupervisorState.isInitialized = true
-            return taskSupervisorState
-        }
+    init {
+        val taskSupervisorState = TaskSupervisorState(context)
+        updateActorState(taskSupervisorState)
+    }
 
     override fun init() {
         fillBehaviours()

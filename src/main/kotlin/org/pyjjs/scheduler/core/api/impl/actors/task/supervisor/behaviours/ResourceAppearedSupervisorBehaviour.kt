@@ -1,20 +1,14 @@
 package org.pyjjs.scheduler.core.api.impl.actors.task.supervisor.behaviours
 
-import akka.actor.ActorRef
 import com.google.common.collect.Lists
 import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
-import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.messages.ResourceAppearedMessage
-import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActor
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.supervisor.TaskSupervisorState
-
-import java.util.Collections
-import java.util.Objects
-import java.util.stream.Collectors
+import java.util.*
 
 class ResourceAppearedSupervisorBehaviour : Behaviour<TaskSupervisorState, ResourceAppearedMessage>() {
     override fun perform(message: ResourceAppearedMessage) {
-        val state = actorState
-        val taskDiscontents = Lists.newArrayList(state.getTaskDiscontents())
+        val taskDiscontents = Lists.newArrayList(actorState.getTaskDiscontents())
         //firstly, task with max discontent
         Collections.sort(taskDiscontents) { o1, o2 ->
             val discontent1 = o1.discontent

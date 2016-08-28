@@ -1,20 +1,17 @@
 package org.pyjjs.scheduler.core.api.impl.actors.system
 
-import com.google.common.collect.Sets
 import org.pyjjs.scheduler.core.api.SchedulingListener
 import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.BehaviourBasedActor
 import org.pyjjs.scheduler.core.api.impl.actors.system.behaviours.GotNewChangesBehaviour
 import org.pyjjs.scheduler.core.api.impl.actors.system.behaviours.NotifyAboutChangesBehaviour
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.pyjjs.scheduler.core.api.impl.actors.system.behaviours.TaskAppearedBehaviour
 
-class SchedulingController(val listeners: SchedulingListener) : BehaviourBasedActor<SchedulingControllerState>() {
+class SchedulingController(listener: SchedulingListener) : BehaviourBasedActor<SchedulingControllerState>() {
 
-    override fun createInitialState(): SchedulingControllerState {
+    init {
         val schedulingControllerState = SchedulingControllerState(context)
-        schedulingControllerState.schedulingListeners = Sets.newHashSet(listeners)
-        schedulingControllerState.isInitialized = true
-        return schedulingControllerState
+        schedulingControllerState.schedulingListeners.add(listener)
+        updateActorState(schedulingControllerState)
     }
 
     override fun init() {
@@ -25,5 +22,6 @@ class SchedulingController(val listeners: SchedulingListener) : BehaviourBasedAc
     private fun fillBehaviours() {
         addBehaviour(GotNewChangesBehaviour::class.java)
         addBehaviour(NotifyAboutChangesBehaviour::class.java)
+        addBehaviour(TaskAppearedBehaviour::class.java)
     }
 }

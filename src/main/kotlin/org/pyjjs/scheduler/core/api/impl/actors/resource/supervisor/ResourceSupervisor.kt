@@ -5,10 +5,9 @@ import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.behaviours.C
 
 class ResourceSupervisor : BehaviourBasedActor<ResourceSupervisorState>() {
 
-    override fun createInitialState(): ResourceSupervisorState {
+    init {
         val resourceSupervisorState = ResourceSupervisorState(context)
-        resourceSupervisorState.isInitialized = true
-        return resourceSupervisorState
+        updateActorState(resourceSupervisorState)
     }
 
     override fun init() {

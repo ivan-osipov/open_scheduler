@@ -57,7 +57,7 @@ class JitPlacementFinder : PlacementFinder {
             penalty = 1.0
             Placement.Type.PARTIAL
         }
-        val offer = Offer(Collections.unmodifiableSet(offeredFreeTimes), penalty)
+        val offer = Offer(offerParts = Collections.unmodifiableSet(offeredFreeTimes), penalty = penalty)
         return Placement(placementType, offer)
     }
 }

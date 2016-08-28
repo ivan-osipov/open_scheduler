@@ -1,23 +1,23 @@
 package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.IFindAnyPlacementMessage
-import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.messages.ResourceAppearedMessage
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
 
 class ResourceAppearedBehaviour : TaskBehaviour<ResourceAppearedMessage>() {
 
     override fun perform(message: ResourceAppearedMessage) {
-        val state = actorState
-        if (hasNotPlacement(state)) {
+        if (hasNotPlacement()) {
             send(message.resourceRef, IFindAnyPlacementMessage(
                     actorRef,
-                    state.source.descriptor,
-                    state.source.resourceCriteria))
+                    actorState.source.descriptor,
+                    actorState.source.resourceCriteria))
+            actorState.status = TaskActorState.Status.WAIT_OFFER
         }
     }
 
-    private fun hasNotPlacement(taskActorState: TaskActorState): Boolean {
-        return taskActorState.discontent == null
+    private fun hasNotPlacement(): Boolean {
+        return TaskActorState.Status.UNPLACED == actorState.status
     }
 
     override fun processMessage(): Class<ResourceAppearedMessage> {

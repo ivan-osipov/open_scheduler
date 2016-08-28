@@ -3,10 +3,9 @@ package org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.behaviours
 import akka.actor.ActorRef
 import akka.actor.Props
 import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
-import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceInitMessage
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.resource.ResourceActor
 import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.ResourceSupervisorState
-import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.messages.ResourceAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.system.messages.EntityCreatedMessage
 import org.pyjjs.scheduler.core.model.Resource
 
@@ -14,15 +13,13 @@ class CreateResourceBehaviour : Behaviour<ResourceSupervisorState, EntityCreated
 
     override fun perform(message: EntityCreatedMessage) {
         val resource = message.entity as Resource
-        val actorState = actorState
         if(!isValid(resource)) {
             actorState.invalidResources.add(resource)
             saveActorState(actorState)
             return
         }
 
-        val newResourceActorRef = createResourceActor()
-        send(newResourceActorRef, ResourceInitMessage(actorRef, resource))
+        val newResourceActorRef = createResourceActor(resource)
         actorState.registerTaskActor(resource, newResourceActorRef)
 
         saveActorState(actorState)
@@ -46,8 +43,8 @@ class CreateResourceBehaviour : Behaviour<ResourceSupervisorState, EntityCreated
         sendToTaskSupervisor(ResourceAppearedMessage(resourceActorRef, resource, actorRef))
     }
 
-    private fun createResourceActor(): ActorRef {
-        return actorState.actorContext.actorOf(Props.create(ResourceActor::class.java))
+    private fun createResourceActor(resource: Resource): ActorRef {
+        return actorState.actorContext.actorOf(Props.create(ResourceActor::class.java, resource))
     }
 
     override fun processMessage(): Class<EntityCreatedMessage> {

@@ -27,7 +27,7 @@ abstract class Behaviour<T : ActorState, M : Message> protected constructor() {
     }
     abstract fun perform(message: M)
 
-    protected fun answer(inMessage: M, answerMessage: Message) {
+    protected fun <M: Message> answer(inMessage: M, answerMessage: Message) {
         inMessage.sender!!.tell(answerMessage, actorRef)
     }
 
@@ -74,6 +74,10 @@ abstract class Behaviour<T : ActorState, M : Message> protected constructor() {
 
     fun sendToParent(message: Message) {
         actorState.actorContext.parent().tell(message, actorRef)
+    }
+
+    fun publishToEventStream(message: Message) {
+        actorState.actorContext.system().eventStream().publish(message)
     }
 
     fun sendToResources(message: Message) {

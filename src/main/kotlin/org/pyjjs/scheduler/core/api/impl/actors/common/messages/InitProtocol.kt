@@ -10,3 +10,7 @@ open class InitEntityAgentMessage<out T : IdentifiableObject>(sender: ActorRef, 
 class TaskInitMessage(sender: ActorRef, source: Task) : InitEntityAgentMessage<Task>(sender, source)
 
 class ResourceInitMessage(sender: ActorRef, source: Resource) : InitEntityAgentMessage<Resource>(sender, source)
+
+class ResourceAppearedMessage(var resourceRef: ActorRef, var resource: Resource, sender: ActorRef) : Message(sender)
+
+class TaskAppearedMessage(var taskRef: ActorRef, var task: Task, sender: ActorRef) : Message(sender)

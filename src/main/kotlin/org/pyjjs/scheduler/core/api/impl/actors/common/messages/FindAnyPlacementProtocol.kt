@@ -1,6 +1,7 @@
 package org.pyjjs.scheduler.core.api.impl.actors.common.messages
 
 import akka.actor.ActorRef
+import org.pyjjs.scheduler.core.model.Resource
 import org.pyjjs.scheduler.core.model.ResourceCriteria
 import org.pyjjs.scheduler.core.model.schedule_specific.Offer
 import org.pyjjs.scheduler.core.placement.Placement
@@ -10,11 +11,13 @@ import java.util.*
 //task:
 class IFindAnyPlacementMessage(taskRef: ActorRef, val taskDescriptor: TaskDescriptor,  var resourceCriteria: ResourceCriteria = ResourceCriteria()) : Message(taskRef)
 //resource:
-class ResourceNotMatchMessage(resourceRef: ActorRef) : Message(resourceRef)
+open class ResourceHasPlacementMessage(resourceRef: ActorRef, val resource: Resource, var offer: Offer): Message(resourceRef)
+//is:
+class ResourceHasFullPlacementMessage(resourceRef: ActorRef, resource: Resource, offer: Offer): ResourceHasPlacementMessage(resourceRef, resource, offer)
 //or:
-class ResourceHasPlacementMessage(resourceRef: ActorRef, var placement: Placement): Message(resourceRef)
+class ResourceHasPartiallyPlacementMessage(resourceRef: ActorRef, resource: Resource, offer: Offer): ResourceHasPlacementMessage(resourceRef, resource, offer)
 //or:
-class ResourceHasNotPlacementMessage(resourceRef: ActorRef): Message(resourceRef)
+class ResourceHasNotPlacementMessage(resourceRef: ActorRef, val rejectionReason: RejectionReason): Message(resourceRef)
 //task:
 class OfferAcceptedMessage(taskRef: ActorRef, var offerId: UUID): Message(taskRef)
 //resource:
@@ -37,3 +40,5 @@ data class TaskDescriptor(val laborContent: Double,
         check(minCapacity*minDuration <= laborContent, {"Disturbed limit: minCapacity*minDuration <= laborContent"})
     }
 }
+
+enum class RejectionReason { HAS_NOT_FREE_TIME,  NOT_MATCH }

@@ -7,8 +7,8 @@ import org.pyjjs.scheduler.core.placement.JitPlacementFinder
 import org.pyjjs.scheduler.core.placement.PlacementFinder
 import org.pyjjs.scheduler.core.placement.time.TimeSheet
 import org.pyjjs.scheduler.core.model.Resource
-
-import java.util.HashSet
+import org.pyjjs.scheduler.core.model.schedule_specific.Offer
+import java.util.*
 
 class ResourceActorState (actorContext: ActorContext,
                           var placementFinder: PlacementFinder = JitPlacementFinder()) : SourceBasedActorState<Resource>(actorContext) {
@@ -17,6 +17,9 @@ class ResourceActorState (actorContext: ActorContext,
     }
 
     var placingPrice: Double = 0.0
+
+    var offersById = HashMap<UUID, Offer>()
+    var timeSheetsByOfferId = HashMap<UUID, TimeSheet>()
 
     lateinit var timeSheet: TimeSheet
 

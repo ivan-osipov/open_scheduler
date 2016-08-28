@@ -1,6 +1,6 @@
 package org.pyjjs.scheduler.core.api
 
-import org.pyjjs.scheduler.core.api.impl.changes.PlanChange.ChangeType.*
+import org.pyjjs.scheduler.core.api.impl.changes.PlanChange.Type.*
 import org.pyjjs.scheduler.core.api.impl.changes.InsertCommitter
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.api.impl.changes.RemoveCommitter
@@ -65,5 +65,11 @@ class PlanMergingController : SchedulingListener, PlanRepresentative {
         override var differentWithIdeal: Double = Double.POSITIVE_INFINITY
 
         override val resourceUsages = TreeSet<ResourceUsage> (Comparators.RESOURCE_USAGE_COMPARATOR)
+
+        override fun toString(): String{
+            return "PlanImpl(lastUpdate=$lastUpdate, version=$version, differentWithIdeal=$differentWithIdeal, resourceUsages=$resourceUsages)"
+        }
+
+
     }
 }

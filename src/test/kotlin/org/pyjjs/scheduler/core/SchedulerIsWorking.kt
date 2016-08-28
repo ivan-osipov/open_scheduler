@@ -46,10 +46,11 @@ class SchedulerIsWorking: BaseSchedulerTest() {
 
     override fun assertPlan(plan: Plan, lastAppliedChanges: SortedSet<PlanChange>) {
         println("Asserting...")
-        assertThat(plan.resourceUsages.size, equalTo(2))
+        assertThat(plan.resourceUsages.size, equalTo(3))
         plan.resourceUsages.forEach { println(it.id) }
         println("Plan version: ${plan.version}")
         println("Plan asserted")
+        print(plan)
     }
 
 }

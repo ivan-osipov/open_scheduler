@@ -6,7 +6,7 @@ import akka.actor.ActorSystem
 
 abstract class ActorState(val actorContext: ActorContext) {
 
-    var isInitialized = false
+    var isInitialized = true
 
     val actorRef: ActorRef
         get() = actorContext.self()
