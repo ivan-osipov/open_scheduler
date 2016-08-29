@@ -1,8 +1,6 @@
 package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 
-import org.pyjjs.scheduler.core.api.impl.actors.system.messages.PlanUpdatedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.messages.CheckOffersMessage
-import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys
 
 class OffersCheckBehaviour : TaskBehaviour<CheckOffersMessage>() {

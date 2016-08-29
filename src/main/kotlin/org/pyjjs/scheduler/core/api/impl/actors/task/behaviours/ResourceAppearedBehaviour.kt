@@ -17,7 +17,7 @@ class ResourceAppearedBehaviour : TaskBehaviour<ResourceAppearedMessage>() {
     }
 
     private fun hasNotPlacement(): Boolean {
-        return TaskActorState.Status.UNPLACED == actorState.status
+        return TaskActorState.Status.PLACED != actorState.status
     }
 
     override fun processMessage(): Class<ResourceAppearedMessage> {

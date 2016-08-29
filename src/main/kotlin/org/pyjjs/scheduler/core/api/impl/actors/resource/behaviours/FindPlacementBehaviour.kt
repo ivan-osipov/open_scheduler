@@ -9,7 +9,7 @@ class FindPlacementBehaviour : ResourceBehaviour<IFindAnyPlacementMessage>() {
 
     override fun perform(message: IFindAnyPlacementMessage) {
         val resource = actorState.source
-        if(resource match message.resourceCriteria.strictCriterion) {
+        if(resource match message.taskDescriptor) {
             val copyOfTimeSheet = actorState.timeSheet.getCopy()
             val placement: Placement = actorState.placementFinder
                     .findAnyPlacement(message.taskDescriptor, copyOfTimeSheet)

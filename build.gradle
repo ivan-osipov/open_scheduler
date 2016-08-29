@@ -1,4 +1,4 @@
-group 'pyjjs.development'
+group 'org.pyjjs'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -21,6 +21,12 @@ compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
+}
+
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 dependencies {

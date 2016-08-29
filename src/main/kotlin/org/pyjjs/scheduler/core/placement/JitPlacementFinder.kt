@@ -1,9 +1,11 @@
 package org.pyjjs.scheduler.core.placement
 
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskDescriptor
+import org.pyjjs.scheduler.core.api.impl.utils.Comparators
 import org.pyjjs.scheduler.core.model.schedule_specific.Offer
 import org.pyjjs.scheduler.core.placement.time.TimePart
 import org.pyjjs.scheduler.core.placement.time.TimeSheet
+import org.pyjjs.scheduler.core.placement.time.UsedTime
 import java.util.*
 
 class JitPlacementFinder : PlacementFinder {
@@ -11,15 +13,24 @@ class JitPlacementFinder : PlacementFinder {
         if(timeSheet.hasFreeTime) {
             return Placement(Placement.Type.IMPOSSIBLY)
         }
-        //TODO: check task restrictions
+
+        val freeTimes = timeSheet.freeTimes.filter {
+            timePartSuitsByTaskDescriptor(it, taskDescriptor)
+        }.toCollection(TreeSet(Comparators.TIME_PART_COMPARATOR))
+
+        if(timeSheet.freeTimes.isEmpty()) {
+            return Placement(Placement.Type.IMPOSSIBLY)
+        }
+
         val affectedFreeTimes = HashSet<TimePart>()
         val offeredFreeTimes = HashSet<TimePart>()
 
         var remainedLaborContent = taskDescriptor.laborContent
-        for (freeTime in timeSheet.freeTimes) {
+        for (freeTime in freeTimes) {
             affectedFreeTimes.add(freeTime)
             if(remainedLaborContent < freeTime.laborContent) {
-                val usedDuration = Math.round(remainedLaborContent / freeTime.capacity).toLong()
+                //todo need balance between capacity and duration
+                val usedDuration = Math.round(remainedLaborContent / (Math.min(taskDescriptor.maxCapacity, freeTime.capacity))).toLong()
                 val usedCapacity = remainedLaborContent / usedDuration
                 val usedFreeTime = TimePart(freeTime.start, usedDuration, usedCapacity)
                 offeredFreeTimes.add(usedFreeTime)
@@ -30,7 +41,7 @@ class JitPlacementFinder : PlacementFinder {
                             freeTime.start,
                             usedDuration,
                             remainedCapacity)
-                    timeSheet.freeTimes.add(remainedFreeTimeByCapacity)
+                    freeTimes.add(remainedFreeTimeByCapacity)
                 }
 
                 val unusedDuration = freeTime.duration - usedDuration
@@ -38,7 +49,7 @@ class JitPlacementFinder : PlacementFinder {
                         freeTime.start + usedDuration,
                         unusedDuration,
                         freeTime.capacity)
-                timeSheet.freeTimes.add(remainedFreeTimeByDuration)
+                freeTimes.add(remainedFreeTimeByDuration)
                 remainedLaborContent = 0.0
                 break
             } else {
@@ -47,7 +58,7 @@ class JitPlacementFinder : PlacementFinder {
                 if(remainedLaborContent == 0.0) break
             }
         }
-        timeSheet.freeTimes.removeAll(affectedFreeTimes)
+        freeTimes.removeAll(affectedFreeTimes)
 
         val penalty: Double
         val placementType: Placement.Type = if(remainedLaborContent == 0.0) {
@@ -57,7 +68,14 @@ class JitPlacementFinder : PlacementFinder {
             penalty = 1.0
             Placement.Type.PARTIAL
         }
+        timeSheet.freeTimes = freeTimes
+        timeSheet.usedTimes.addAll(offeredFreeTimes.map { UsedTime(taskDescriptor, it) })
         val offer = Offer(offerParts = Collections.unmodifiableSet(offeredFreeTimes), penalty = penalty)
         return Placement(placementType, offer)
+    }
+
+    private fun timePartSuitsByTaskDescriptor(timePart: TimePart, taskDescriptor: TaskDescriptor): Boolean {
+        return timePart.capacity >= taskDescriptor.minCapacity && timePart.capacity <= taskDescriptor.maxCapacity &&
+                timePart.duration >= taskDescriptor.minDuration
     }
 }

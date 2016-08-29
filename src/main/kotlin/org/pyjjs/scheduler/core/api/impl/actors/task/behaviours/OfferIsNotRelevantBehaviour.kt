@@ -10,6 +10,7 @@ class OfferIsNotRelevantBehaviour: TaskBehaviour<OfferIsNotRelevantMessage>() {
     override fun perform(message: OfferIsNotRelevantMessage) {
         val placementMessageQueue = actorState.placementMessageQueue
 
+        //todo fetch the best
         val placementMessage = placementMessageQueue.poll()
         placementMessage ?: apply {
             sendRequestAgain(message.sender!!)
