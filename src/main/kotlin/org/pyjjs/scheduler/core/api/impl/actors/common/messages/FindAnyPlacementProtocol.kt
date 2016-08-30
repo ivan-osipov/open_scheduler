@@ -1,9 +1,10 @@
 package org.pyjjs.scheduler.core.api.impl.actors.common.messages
 
 import akka.actor.ActorRef
+import org.pyjjs.scheduler.core.api.impl.strategies.DEFAULT_STRATEGY_KEY
 import org.pyjjs.scheduler.core.model.Resource
 import org.pyjjs.scheduler.core.model.ResourceCriteria
-import org.pyjjs.scheduler.core.model.schedule_specific.Offer
+import org.pyjjs.scheduler.core.placement.Offer
 import org.pyjjs.scheduler.core.placement.Placement
 import java.util.*
 
@@ -26,13 +27,14 @@ class PlacementReservedMessage(resourceRef: ActorRef, var offerId: UUID): Messag
 class OfferIsNotRelevantMessage(resourceRef: ActorRef, var offerId: UUID): Message(resourceRef)
 
 //DTO
-data class TaskDescriptor(val laborContent: Double,
+data class TaskDescriptor @JvmOverloads constructor(val laborContent: Double,
                      val minCapacity: Double,
                      val maxCapacity: Double,
                      val minDuration: Long,
                      val maxDuration: Long,
                      var minStartDate: Long? = null,
-                     var deadline: Long? = null) {
+                     var deadline: Long? = null,
+                     var strategy: String = DEFAULT_STRATEGY_KEY) {
     init {
         check(maxCapacity > minCapacity, {"Disturbed limit: maxCapacity > minCapacity"})
         check(maxDuration > minDuration, {"Disturbed limit: maxDuration > minDuration"})

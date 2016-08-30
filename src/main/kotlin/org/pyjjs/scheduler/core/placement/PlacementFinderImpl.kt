@@ -2,13 +2,13 @@ package org.pyjjs.scheduler.core.placement
 
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskDescriptor
 import org.pyjjs.scheduler.core.api.impl.utils.Comparators
-import org.pyjjs.scheduler.core.model.schedule_specific.Offer
+import org.pyjjs.scheduler.core.placement.Offer
 import org.pyjjs.scheduler.core.placement.time.TimePart
 import org.pyjjs.scheduler.core.placement.time.TimeSheet
 import org.pyjjs.scheduler.core.placement.time.UsedTime
 import java.util.*
 
-class JitPlacementFinder : PlacementFinder {
+class PlacementFinderImpl : PlacementFinder {
     override fun findAnyPlacement(taskDescriptor: TaskDescriptor, timeSheet: TimeSheet): Placement {
         if(timeSheet.hasFreeTime) {
             return Placement(Placement.Type.IMPOSSIBLY)

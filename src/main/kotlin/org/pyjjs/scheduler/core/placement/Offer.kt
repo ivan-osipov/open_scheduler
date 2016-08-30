@@ -1,4 +1,4 @@
-package org.pyjjs.scheduler.core.model.schedule_specific
+package org.pyjjs.scheduler.core.placement
 
 import org.pyjjs.scheduler.core.placement.time.TimePart
 import java.util.*

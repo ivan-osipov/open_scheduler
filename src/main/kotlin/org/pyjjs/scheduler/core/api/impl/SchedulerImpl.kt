@@ -11,6 +11,7 @@ import com.google.common.collect.HashBiMap
 import com.typesafe.config.ConfigFactory
 import org.pyjjs.scheduler.core.api.PlanMergingController
 import org.pyjjs.scheduler.core.api.PlanRepresentative
+import org.pyjjs.scheduler.core.api.RegistryOfStrategies
 import org.pyjjs.scheduler.core.api.Scheduler
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.resource.ResourceActor
@@ -23,6 +24,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.system.messages.EntityUpdatedMes
 import org.pyjjs.scheduler.core.api.impl.actors.system.messages.PlanUpdatedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActor
 import org.pyjjs.scheduler.core.api.impl.actors.task.supervisor.TaskSupervisor
+import org.pyjjs.scheduler.core.api.impl.strategies.RegistryOfStrategiesImpl
 import org.pyjjs.scheduler.core.data.HashSetDataSourceImpl
 import org.pyjjs.scheduler.core.data.ObservableDataSource
 import org.pyjjs.scheduler.core.model.IdentifiableObject
@@ -54,6 +56,8 @@ class SchedulerImpl @JvmOverloads constructor(override val dataSource: Observabl
     private val mergingController: PlanMergingController
 
     private val LOG = LoggerFactory.getLogger(String.format("Scheduler [%s]", uuid.toString()))
+
+    override val registryOfStrategies: RegistryOfStrategies = RegistryOfStrategiesImpl()
 
     init {
         mergingController = PlanMergingController()
@@ -91,7 +95,7 @@ class SchedulerImpl @JvmOverloads constructor(override val dataSource: Observabl
         taskSupervisor = actorSystem.actorOf(Props.create(TaskSupervisor::class.java), "tasks")
         resourceSupervisor = actorSystem.actorOf(Props.create(ResourceSupervisor::class.java), "resources")
 
-        schedulingController = actorSystem.actorOf(Props.create(SchedulingController::class.java, mergingController))
+        schedulingController = actorSystem.actorOf(Props.create(SchedulingController::class.java, mergingController, registryOfStrategies))
         actorSystem.eventStream().subscribe(schedulingController, PlanUpdatedMessage::class.java)
         actorSystem.eventStream().subscribe(schedulingController, TaskAppearedMessage::class.java)
 

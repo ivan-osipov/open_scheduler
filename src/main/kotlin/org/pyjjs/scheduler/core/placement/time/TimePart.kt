@@ -7,6 +7,9 @@ data class TimePart(var start: Long = 0L,
     val laborContent: Double
         get() = duration*capacity
 
+    val end: Long
+        get() = start + duration
+
     fun getCopy(): TimePart {
         return clone() as TimePart
     }

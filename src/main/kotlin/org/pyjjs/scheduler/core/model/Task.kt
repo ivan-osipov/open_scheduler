@@ -5,7 +5,7 @@ import java.util.*
 
 class Task(var descriptor: TaskDescriptor) : IdentifiableObject() {
 
-    var result: TaskResult? = null
+    var result = TaskResult(this)
     var resourceCriteria: ResourceCriteria = ResourceCriteria()
 
     var successors: Set<Task> = HashSet()

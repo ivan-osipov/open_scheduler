@@ -13,8 +13,18 @@ class NotifyAboutChangesBehaviour: Behaviour<SchedulingControllerState, CheckNew
         actorState.schedulingListeners.forEach { it.onChange(changes) }
         actorState.planChanges.clear()
         actorState.setCheckOffersAreScheduled(false)
-
         saveActorState(actorState)
+
+        val sumTaskDiscontent = actorState.discontentsByTaskActors.values.sum()
+        BEHAVIOUR_LOG.info("\nSystem objective function: $sumTaskDiscontent\n")
+        allowMostDiscontentedActorToFindAlternatives(actorState)
+    }
+
+    private fun allowMostDiscontentedActorToFindAlternatives(actorState: SchedulingControllerState) {
+        if (!actorState.discontentsByTaskActors.isEmpty()) {
+            val mostDiscontentedActor = actorState.discontentsByTaskActors.maxBy { it.value }!!.key
+            //TODO send allowing message
+        }
     }
 
     override fun processMessage(): Class<CheckNewChanges> {

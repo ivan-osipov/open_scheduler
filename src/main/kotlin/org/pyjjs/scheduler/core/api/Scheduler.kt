@@ -11,4 +11,6 @@ interface Scheduler: PlanRepresentative{
     fun reset()
 
     val dataSource: ObservableDataSource
+
+    val registryOfStrategies: RegistryOfStrategies
 }
