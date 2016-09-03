@@ -2,8 +2,11 @@ import org.gradle.jvm.tasks.Jar
 
 val buildNumber = project.properties["buildNumber"]
 
+val targetMinorVersion = "1"
+val currentMinorVersion = "0"
+
 group = "org.pyjjs"
-version = "0.1${if(buildNumber != null) ".$buildNumber" else "-SNAPSHOT"}"
+version = "0.${if(buildNumber != null) "$currentMinorVersion.$buildNumber" else "$targetMinorVersion-SNAPSHOT"}"
 
 extra["akka_version"] = "2.4.2"
 extra["groovy_version"] = "2.4.7"
