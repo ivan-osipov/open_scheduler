@@ -1,3 +1,5 @@
+import org.gradle.jvm.tasks.Jar
+
 val buildNumber = project.properties["buildNumber"]
 
 group = "org.pyjjs"
@@ -15,7 +17,10 @@ extra["hamcrest_version"] = "1.3"
 
 buildscript {
     repositories {
-        gradleScriptKotlin()
+        mavenCentral()
+        maven {
+            setUrl("http://dl.bintray.com/kotlin/kotlin-dev")
+        }
     }
 
     dependencies {
@@ -59,15 +64,14 @@ dependencies {
     testCompile("org.hamcrest:hamcrest-library:${extra["hamcrest_version"]}")
 }
 
+task<Jar>("fatJar") {
+    baseName = "${project.name}-all"
+    from(configurations.compile.map {
+        if (it.isDirectory) return@map it
+        else {
+            zipTree(it)
+        }
+    })
+    with(tasks.getByName("jar") as Jar)
+}
 
-//val fatJar = with(Jar()) {
-//    baseName = "${project.name}-all"
-//    from(configurations.compile.files)
-//    with(this)
-//}
-
-//task<Jar>("fatJar") {
-//    baseName = "${project.name}-all"
-//    from(configurations.compile.files)
-//    with(Jar())
-//}
