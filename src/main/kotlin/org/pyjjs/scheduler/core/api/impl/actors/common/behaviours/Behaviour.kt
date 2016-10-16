@@ -6,12 +6,12 @@ import org.pyjjs.scheduler.core.api.impl.actors.common.ActorStateInteraction
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.Message
 import org.pyjjs.scheduler.core.common.SystemConfigKeys
 import org.pyjjs.scheduler.core.common.locale.LangResolver
-import org.pyjjs.scheduler.core.common.locale.LocaleNotFoundException
 import org.pyjjs.scheduler.core.common.locale.LocaleResolver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import scala.concurrent.duration.FiniteDuration
 import java.util.concurrent.TimeUnit
+import kotlin.reflect.KClass
 
 abstract class Behaviour<T : ActorState, M : Message> protected constructor() {
     val BEHAVIOUR_LOG: Logger = LoggerFactory.getLogger(javaClass)
@@ -23,7 +23,7 @@ abstract class Behaviour<T : ActorState, M : Message> protected constructor() {
     private var localeResolver: LocaleResolver? = null
 
     fun invoke(message: Message) {
-        perform(processMessage().cast(message))
+        perform(processMessage().java.cast(message))
     }
     abstract fun perform(message: M)
 
@@ -113,5 +113,5 @@ abstract class Behaviour<T : ActorState, M : Message> protected constructor() {
         sendByDelay(notification, notificationDelayInMillis, TimeUnit.MILLISECONDS)
     }
 
-    abstract fun processMessage(): Class<out M>
+    abstract fun processMessage(): KClass<out M>
 }

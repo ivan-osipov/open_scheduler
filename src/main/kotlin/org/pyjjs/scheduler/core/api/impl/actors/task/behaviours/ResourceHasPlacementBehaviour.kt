@@ -4,6 +4,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.common.messages.OfferAcceptedMes
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceHasFullPlacementMessage
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceHasPlacementMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
+import kotlin.reflect.KClass
 
 class ResourceHasPlacementBehaviour: TaskBehaviour<ResourceHasPlacementMessage>() {
 
@@ -30,8 +31,8 @@ class ResourceHasPlacementBehaviour: TaskBehaviour<ResourceHasPlacementMessage>(
         }
     }
 
-    override fun processMessage(): Class<out ResourceHasPlacementMessage> {
-        return ResourceHasPlacementMessage::class.java
+    override fun processMessage(): KClass<out ResourceHasPlacementMessage> {
+        return ResourceHasPlacementMessage::class
     }
 
 }

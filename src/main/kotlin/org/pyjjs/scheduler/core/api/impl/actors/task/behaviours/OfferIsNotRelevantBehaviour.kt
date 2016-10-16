@@ -5,6 +5,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.common.messages.IFindAnyPlacemen
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.OfferAcceptedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.OfferIsNotRelevantMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
+import kotlin.reflect.KClass
 
 class OfferIsNotRelevantBehaviour: TaskBehaviour<OfferIsNotRelevantMessage>() {
     override fun perform(message: OfferIsNotRelevantMessage) {
@@ -16,7 +17,7 @@ class OfferIsNotRelevantBehaviour: TaskBehaviour<OfferIsNotRelevantMessage>() {
             sendRequestAgain(message.sender!!)
             return
         }
-        val offer = placementMessage.offer;
+        val offer = placementMessage.offer
         actorState.offersById.remove(message.offerId)
         answer(placementMessage, OfferAcceptedMessage(actorRef, offer.id))
         actorState.status = TaskActorState.Status.WAIT_RESERVING
@@ -32,8 +33,8 @@ class OfferIsNotRelevantBehaviour: TaskBehaviour<OfferIsNotRelevantMessage>() {
         saveActorState(actorState)
     }
 
-    override fun processMessage(): Class<out OfferIsNotRelevantMessage> {
-        return OfferIsNotRelevantMessage::class.java
+    override fun processMessage(): KClass<out OfferIsNotRelevantMessage> {
+        return OfferIsNotRelevantMessage::class
     }
 
 }

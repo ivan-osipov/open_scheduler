@@ -5,6 +5,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.system.messages.PlanUpdatedMessa
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.model.ResourceUsage
+import kotlin.reflect.KClass
 
 class PlacementReservedBehavior: TaskBehaviour<PlacementReservedMessage>() {
     override fun perform(message: PlacementReservedMessage) {
@@ -29,8 +30,8 @@ class PlacementReservedBehavior: TaskBehaviour<PlacementReservedMessage>() {
         saveActorState(actorState)
     }
 
-    override fun processMessage(): Class<out PlacementReservedMessage> {
-        return PlacementReservedMessage::class.java
+    override fun processMessage(): KClass<out PlacementReservedMessage> {
+        return PlacementReservedMessage::class
     }
 
 }

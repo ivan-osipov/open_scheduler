@@ -8,6 +8,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.resource.ResourceActor
 import org.pyjjs.scheduler.core.api.impl.actors.resource.supervisor.ResourceSupervisorState
 import org.pyjjs.scheduler.core.api.impl.actors.system.messages.EntityCreatedMessage
 import org.pyjjs.scheduler.core.model.Resource
+import kotlin.reflect.KClass
 
 class CreateResourceBehaviour : Behaviour<ResourceSupervisorState, EntityCreatedMessage>() {
 
@@ -47,7 +48,7 @@ class CreateResourceBehaviour : Behaviour<ResourceSupervisorState, EntityCreated
         return actorState.actorContext.actorOf(Props.create(ResourceActor::class.java, resource))
     }
 
-    override fun processMessage(): Class<EntityCreatedMessage> {
-        return EntityCreatedMessage::class.java
+    override fun processMessage(): KClass<EntityCreatedMessage> {
+        return EntityCreatedMessage::class
     }
 }

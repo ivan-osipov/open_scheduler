@@ -8,7 +8,7 @@ import org.pyjjs.scheduler.core.api.RegistryOfStrategies
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorState
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.api.SchedulingListener
-import org.pyjjs.scheduler.core.api.impl.utils.Comparators
+import org.pyjjs.scheduler.core.api.impl.utils.TIMESTAMP_COMPARATOR
 import org.pyjjs.scheduler.core.model.Task
 import java.util.*
 
@@ -16,7 +16,7 @@ class SchedulingControllerState(actorContext: ActorContext, val registryOfStrate
 
     var schedulingListeners: MutableSet<SchedulingListener> = HashSet()
 
-    var planChanges: SortedSet<PlanChange> = TreeSet(Comparators.TIMESTAMP_COMPARATOR)
+    var planChanges: SortedSet<PlanChange> = TreeSet(TIMESTAMP_COMPARATOR)
 
     val tasks: BiMap<Task, ActorRef> = HashBiMap.create()
 

@@ -5,6 +5,7 @@ import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys
 import org.pyjjs.scheduler.core.api.impl.actors.resource.messages.OfferMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
 import org.pyjjs.scheduler.core.api.impl.actors.task.messages.CheckOffersMessage
+import kotlin.reflect.KClass
 
 class OfferStoreBehaviour : TaskBehaviour<OfferMessage>() {
 
@@ -25,8 +26,8 @@ class OfferStoreBehaviour : TaskBehaviour<OfferMessage>() {
         actorState.setCheckOffersScheduled(true)
     }
 
-    override fun processMessage(): Class<OfferMessage> {
-        return OfferMessage::class.java
+    override fun processMessage(): KClass<OfferMessage> {
+        return OfferMessage::class
     }
 
 }

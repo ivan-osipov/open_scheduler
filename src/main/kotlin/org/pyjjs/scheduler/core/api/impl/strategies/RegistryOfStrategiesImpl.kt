@@ -16,14 +16,14 @@ class RegistryOfStrategiesImpl: RegistryOfStrategies {
     }
 
     override fun registerStrategy(strategyKey: String, taskObjectiveFunction: TaskObjectiveFunction) {
-        check(!DEFAULT_STRATEGY_KEY.equals(strategyKey), {"${DEFAULT_STRATEGY_KEY} is default strategy. Default strategy cannot be added."})
+        check(!DEFAULT_STRATEGY_KEY.equals(strategyKey), {"$DEFAULT_STRATEGY_KEY is default strategy. Default strategy cannot be added."})
         checkNotNull(strategyKey, {"Strategy key cannot be null"})
         checkNotNull(taskObjectiveFunction, {"Task objective function cannot be null"})
         registry[strategyKey] = taskObjectiveFunction
     }
 
     override fun unregisterStrategy(strategyKey: String) {
-        check(!DEFAULT_STRATEGY_KEY.equals(strategyKey), {"${DEFAULT_STRATEGY_KEY} is default strategy. Default strategy cannot be removed."})
+        check(!DEFAULT_STRATEGY_KEY.equals(strategyKey), {"$DEFAULT_STRATEGY_KEY is default strategy. Default strategy cannot be removed."})
         checkNotNull(strategyKey, {"Strategy key cannot be null"})
         registry.remove(strategyKey)
     }

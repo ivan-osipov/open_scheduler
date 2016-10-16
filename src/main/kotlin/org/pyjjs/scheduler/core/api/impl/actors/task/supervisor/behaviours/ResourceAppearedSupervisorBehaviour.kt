@@ -5,6 +5,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.supervisor.TaskSupervisorState
 import java.util.*
+import kotlin.reflect.KClass
 
 class ResourceAppearedSupervisorBehaviour : Behaviour<TaskSupervisorState, ResourceAppearedMessage>() {
     override fun perform(message: ResourceAppearedMessage) {
@@ -20,7 +21,7 @@ class ResourceAppearedSupervisorBehaviour : Behaviour<TaskSupervisorState, Resou
         sendToAll(tasks, message)
     }
 
-    override fun processMessage(): Class<ResourceAppearedMessage> {
-        return ResourceAppearedMessage::class.java
+    override fun processMessage(): KClass<ResourceAppearedMessage> {
+        return ResourceAppearedMessage::class
     }
 }

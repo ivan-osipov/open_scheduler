@@ -10,6 +10,7 @@ import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
 import org.pyjjs.scheduler.core.api.impl.strategies.ContextImpl
 import org.pyjjs.scheduler.core.common.SystemConfigKeys
 import org.pyjjs.scheduler.core.model.Task
+import kotlin.reflect.KClass
 
 class GotNewChangesBehaviour : Behaviour<SchedulingControllerState, PlanUpdatedMessage>() {
     override fun perform(message: PlanUpdatedMessage) {
@@ -58,7 +59,7 @@ class GotNewChangesBehaviour : Behaviour<SchedulingControllerState, PlanUpdatedM
         actorState.discontentsByTaskActors[sender] = Math.abs(taskObjectiveFunction.calculate(task, context))
     }
 
-    override fun processMessage(): Class<PlanUpdatedMessage> {
-        return PlanUpdatedMessage::class.java
+    override fun processMessage(): KClass<PlanUpdatedMessage> {
+        return PlanUpdatedMessage::class
     }
 }

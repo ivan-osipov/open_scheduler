@@ -4,11 +4,11 @@ import akka.actor.ActorRef
 import akka.actor.Props
 import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskAppearedMessage
-import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskInitMessage
 import org.pyjjs.scheduler.core.api.impl.actors.system.messages.EntityCreatedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActor
 import org.pyjjs.scheduler.core.api.impl.actors.task.supervisor.TaskSupervisorState
 import org.pyjjs.scheduler.core.model.Task
+import kotlin.reflect.KClass
 
 class CreateTaskBehaviour : Behaviour<TaskSupervisorState, EntityCreatedMessage>() {
 
@@ -30,7 +30,7 @@ class CreateTaskBehaviour : Behaviour<TaskSupervisorState, EntityCreatedMessage>
         return actorState.actorContext.actorOf(Props.create(TaskActor::class.java, task))
     }
 
-    override fun processMessage(): Class<EntityCreatedMessage> {
-        return EntityCreatedMessage::class.java
+    override fun processMessage(): KClass<EntityCreatedMessage> {
+        return EntityCreatedMessage::class
     }
 }

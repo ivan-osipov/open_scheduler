@@ -2,14 +2,16 @@ package org.pyjjs.scheduler.core.api.impl.actors.system.behaviours
 
 import com.google.common.collect.ImmutableSortedSet
 import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
+import org.pyjjs.scheduler.core.api.impl.actors.common.messages.FindBetterMessage
 import org.pyjjs.scheduler.core.api.impl.actors.system.SchedulingControllerState
 import org.pyjjs.scheduler.core.api.impl.actors.system.messages.CheckNewChanges
-import org.pyjjs.scheduler.core.api.impl.utils.Comparators
+import org.pyjjs.scheduler.core.api.impl.utils.*
+import kotlin.reflect.KClass
 
 class NotifyAboutChangesBehaviour: Behaviour<SchedulingControllerState, CheckNewChanges>() {
     override fun perform(message: CheckNewChanges) {
         BEHAVIOUR_LOG.info("Scheduling controlled notify about changes: ${actorState.planChanges}")
-        val changes = ImmutableSortedSet.copyOf(Comparators.TIMESTAMP_COMPARATOR, actorState.planChanges)
+        val changes = ImmutableSortedSet.copyOf(TIMESTAMP_COMPARATOR, actorState.planChanges)
         actorState.schedulingListeners.forEach { it.onChange(changes) }
         actorState.planChanges.clear()
         actorState.setCheckOffersAreScheduled(false)
@@ -23,12 +25,12 @@ class NotifyAboutChangesBehaviour: Behaviour<SchedulingControllerState, CheckNew
     private fun allowMostDiscontentedActorToFindAlternatives(actorState: SchedulingControllerState) {
         if (!actorState.discontentsByTaskActors.isEmpty()) {
             val mostDiscontentedActor = actorState.discontentsByTaskActors.maxBy { it.value }!!.key
-            //TODO send allowing message
+            send(mostDiscontentedActor, FindBetterMessage(actorRef))
         }
     }
 
-    override fun processMessage(): Class<CheckNewChanges> {
-        return CheckNewChanges::class.java
+    override fun processMessage(): KClass<CheckNewChanges> {
+        return CheckNewChanges::class
     }
 
 }

@@ -1,12 +1,12 @@
 package org.pyjjs.scheduler.core.placement.time
 
-import org.pyjjs.scheduler.core.api.impl.utils.Comparators
+import org.pyjjs.scheduler.core.api.impl.utils.*
 import java.util.*
 
 class TimeSheet(
         var resourceAvailabilityTable: ResourceAvailabilityTable = ResourceAvailabilityTable(),
-        var freeTimes: TreeSet<TimePart> = TreeSet(Comparators.TIME_PART_COMPARATOR),
-        var usedTimes: TreeSet<UsedTime> = TreeSet(Comparators.USED_TIME_COMPARATOR),
+        var freeTimes: TreeSet<TimePart> = TreeSet(TIME_PART_COMPARATOR),
+        var usedTimes: TreeSet<UsedTime> = TreeSet(USED_TIME_COMPARATOR),
         var leftoverFreeTime: TimePart? = null
     ) : Cloneable {
 
@@ -72,8 +72,8 @@ class TimeSheet(
     override fun clone(): Any {
         val clone = super.clone() as TimeSheet
         clone.resourceAvailabilityTable = resourceAvailabilityTable.getCopy()
-        clone.freeTimes = freeTimes.map { it.getCopy() }.toCollection(TreeSet(Comparators.TIME_PART_COMPARATOR))
-        clone.usedTimes = usedTimes.map { it.getCopy() }.toCollection(TreeSet(Comparators.USED_TIME_COMPARATOR))
+        clone.freeTimes = freeTimes.map { it.getCopy() }.toCollection(TreeSet(TIME_PART_COMPARATOR))
+        clone.usedTimes = usedTimes.map { it.getCopy() }.toCollection(TreeSet(USED_TIME_COMPARATOR))
         clone.leftoverFreeTime = leftoverFreeTime?.getCopy()
         return clone
     }

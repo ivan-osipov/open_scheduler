@@ -1,6 +1,7 @@
 package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskInitMessage
+import kotlin.reflect.KClass
 
 class TaskInitBehaviour : TaskBehaviour<TaskInitMessage>() {
 
@@ -11,7 +12,7 @@ class TaskInitBehaviour : TaskBehaviour<TaskInitMessage>() {
         saveActorState(taskActorState)
     }
 
-    override fun processMessage(): Class<TaskInitMessage> {
-        return TaskInitMessage::class.java
+    override fun processMessage(): KClass<TaskInitMessage> {
+        return TaskInitMessage::class
     }
 }

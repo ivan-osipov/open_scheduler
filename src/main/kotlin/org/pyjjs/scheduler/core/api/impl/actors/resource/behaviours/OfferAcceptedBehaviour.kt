@@ -3,6 +3,7 @@ package org.pyjjs.scheduler.core.api.impl.actors.resource.behaviours
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.OfferAcceptedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.OfferIsNotRelevantMessage
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.PlacementReservedMessage
+import kotlin.reflect.KClass
 
 class OfferAcceptedBehaviour : ResourceBehaviour<OfferAcceptedMessage>() {
     override fun perform(message: OfferAcceptedMessage) {
@@ -20,8 +21,8 @@ class OfferAcceptedBehaviour : ResourceBehaviour<OfferAcceptedMessage>() {
         }
     }
 
-    override fun processMessage(): Class<out OfferAcceptedMessage> {
-        return OfferAcceptedMessage::class.java
+    override fun processMessage(): KClass<out OfferAcceptedMessage> {
+        return OfferAcceptedMessage::class
     }
 
 }

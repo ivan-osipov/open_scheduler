@@ -2,6 +2,7 @@ package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 
 import org.pyjjs.scheduler.core.api.impl.actors.task.messages.CheckOffersMessage
 import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys
+import kotlin.reflect.KClass
 
 class OffersCheckBehaviour : TaskBehaviour<CheckOffersMessage>() {
 
@@ -20,7 +21,7 @@ class OffersCheckBehaviour : TaskBehaviour<CheckOffersMessage>() {
         //TODO react
     }
 
-    override fun processMessage(): Class<CheckOffersMessage> {
-        return CheckOffersMessage::class.java
+    override fun processMessage(): KClass<CheckOffersMessage> {
+        return CheckOffersMessage::class
     }
 }

@@ -4,6 +4,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.common.messages.*
 import org.pyjjs.scheduler.core.common.locale.LocaleMessageKeys
 import org.pyjjs.scheduler.core.model.criteria.match
 import org.pyjjs.scheduler.core.placement.Placement
+import kotlin.reflect.KClass
 
 class FindPlacementBehaviour : ResourceBehaviour<IFindAnyPlacementMessage>() {
 
@@ -41,7 +42,7 @@ class FindPlacementBehaviour : ResourceBehaviour<IFindAnyPlacementMessage>() {
         }
     }
 
-    override fun processMessage(): Class<IFindAnyPlacementMessage> {
-        return IFindAnyPlacementMessage::class.java
+    override fun processMessage(): KClass<IFindAnyPlacementMessage> {
+        return IFindAnyPlacementMessage::class
     }
 }

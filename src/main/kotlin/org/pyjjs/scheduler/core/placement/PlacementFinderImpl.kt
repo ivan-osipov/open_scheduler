@@ -1,8 +1,7 @@
 package org.pyjjs.scheduler.core.placement
 
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.TaskDescriptor
-import org.pyjjs.scheduler.core.api.impl.utils.Comparators
-import org.pyjjs.scheduler.core.placement.Offer
+import org.pyjjs.scheduler.core.api.impl.utils.*
 import org.pyjjs.scheduler.core.placement.time.TimePart
 import org.pyjjs.scheduler.core.placement.time.TimeSheet
 import org.pyjjs.scheduler.core.placement.time.UsedTime
@@ -16,7 +15,7 @@ class PlacementFinderImpl : PlacementFinder {
 
         val freeTimes = timeSheet.freeTimes.filter {
             timePartSuitsByTaskDescriptor(it, taskDescriptor)
-        }.toCollection(TreeSet(Comparators.TIME_PART_COMPARATOR))
+        }.toCollection(TreeSet(TIME_PART_COMPARATOR))
 
         if(timeSheet.freeTimes.isEmpty()) {
             return Placement(Placement.Type.IMPOSSIBLY)

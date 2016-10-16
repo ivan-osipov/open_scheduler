@@ -8,26 +8,29 @@ val currentMinorVersion = "0"
 group = "org.pyjjs"
 version = "0.${if(buildNumber != null) "$currentMinorVersion.$buildNumber" else "$targetMinorVersion-SNAPSHOT"}"
 
-extra["akka_version"] = "2.4.2"
-extra["groovy_version"] = "2.4.7"
-extra["findbugs_version"] = "3.0.1"
-extra["guava_version"] = "19.0"
-extra["slf4j_version"] = "1.7.21"
-extra["logback_version"] = "1.1.7"
-extra["spring_version"] = "4.3.0.RELEASE"
-extra["junit_version"] = "4.12"
-extra["hamcrest_version"] = "1.3"
+val akkaVersion = "2.4.2"
+val groovyVersion = "2.4.7"
+val findbugsVersion = "3.0.1"
+val guavaVersion = "19.0"
+val slf4jVersion = "1.7.21"
+val logbackVersion = "1.1.7"
+val springVersion = "4.3.0.RELEASE"
+val junitVersion = "4.12"
+val hamcrestVersion = "1.3"
+val kotlin_version = "1.0.4"
 
 buildscript {
+    val kotlin_version = "1.0.4"
     repositories {
         mavenCentral()
-        maven {
-            setUrl("http://dl.bintray.com/kotlin/kotlin-dev")
-        }
+//        maven {
+//            setUrl("http://dl.bintray.com/kotlin/kotlin-dev")
+//        }
     }
 
     dependencies {
-        classpath(kotlinModule("gradle-plugin"))
+//        classpath(kotlinModule("gradle-plugin"))
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
@@ -53,28 +56,28 @@ repositories {
 
 dependencies {
     compile(kotlinModule("stdlib"))
-    compile("com.typesafe.akka:akka-actor_2.11:${extra["akka_version"]}")
-    compile("org.codehaus.groovy:groovy-all:${extra["groovy_version"]}")
-    compile("com.google.code.findbugs:jsr305:${extra["findbugs_version"]}")
-    compile("com.google.guava:guava:${extra["guava_version"]}")
-    compile("org.slf4j:slf4j-api:${extra["slf4j_version"]}")
-    compile("ch.qos.logback:logback-classic:${extra["logback_version"]}")
-    compile("ch.qos.logback:logback-core:${extra["logback_version"]}")
-    compile("org.springframework:spring-beans:${extra["spring_version"]}")
-    compile("org.springframework:spring-context:${extra["spring_version"]}")
+    compile("com.typesafe.akka:akka-actor_2.11:$akkaVersion")
+    compile("org.codehaus.groovy:groovy-all:$groovyVersion")
+    compile("com.google.code.findbugs:jsr305:$findbugsVersion")
+    compile("com.google.guava:guava:$guavaVersion")
+    compile("org.slf4j:slf4j-api:$slf4jVersion")
+    compile("ch.qos.logback:logback-classic:$logbackVersion")
+    compile("ch.qos.logback:logback-core:$logbackVersion")
+    compile("org.springframework:spring-beans:$springVersion")
+    compile("org.springframework:spring-context:$springVersion")
 
-    testCompile("junit:junit:${extra["junit_version"]}")
-    testCompile("org.hamcrest:hamcrest-library:${extra["hamcrest_version"]}")
+    testCompile("junit:junit:$junitVersion")
+    testCompile("org.hamcrest:hamcrest-library:$hamcrestVersion")
 }
 
-task<Jar>("fatJar") {
-    baseName = "${project.name}-all"
-    from(configurations.compile.map {
-        if (it.isDirectory) return@map it
-        else {
-            zipTree(it)
-        }
-    })
-    with(tasks.getByName("jar") as Jar)
-}
+//task<Jar>("fatJar") {
+//    baseName = "${project.name}-all"
+//    from(configurations.compile.map {
+//        if (it.isDirectory) return@map it
+//        else {
+//            zipTree(it)
+//        }
+//    })
+//    with(tasks.getByName("jar") as Jar)
+//}
 

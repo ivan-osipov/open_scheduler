@@ -6,6 +6,7 @@ import org.pyjjs.scheduler.core.api.impl.actors.system.messages.DataSourceChange
 import org.pyjjs.scheduler.core.model.IdentifiableObject
 import org.pyjjs.scheduler.core.model.Resource
 import org.pyjjs.scheduler.core.model.Task
+import kotlin.reflect.KClass
 
 class DataSourceChangeBehaviour : Behaviour<ModificationControllerState, DataSourceChangedMessage>() {
 
@@ -18,7 +19,7 @@ class DataSourceChangeBehaviour : Behaviour<ModificationControllerState, DataSou
         }
     }
 
-    override fun processMessage(): Class<DataSourceChangedMessage> {
-        return DataSourceChangedMessage::class.java
+    override fun processMessage(): KClass<DataSourceChangedMessage> {
+        return DataSourceChangedMessage::class
     }
 }

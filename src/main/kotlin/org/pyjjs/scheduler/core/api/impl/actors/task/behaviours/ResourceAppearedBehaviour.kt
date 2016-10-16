@@ -3,6 +3,7 @@ package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.IFindAnyPlacementMessage
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceAppearedMessage
 import org.pyjjs.scheduler.core.api.impl.actors.task.TaskActorState
+import kotlin.reflect.KClass
 
 class ResourceAppearedBehaviour : TaskBehaviour<ResourceAppearedMessage>() {
 
@@ -20,7 +21,7 @@ class ResourceAppearedBehaviour : TaskBehaviour<ResourceAppearedMessage>() {
         return TaskActorState.Status.PLACED != actorState.status
     }
 
-    override fun processMessage(): Class<ResourceAppearedMessage> {
-        return ResourceAppearedMessage::class.java
+    override fun processMessage(): KClass<ResourceAppearedMessage> {
+        return ResourceAppearedMessage::class
     }
 }

@@ -5,10 +5,11 @@ import org.pyjjs.scheduler.core.api.impl.actors.common.ActorState
 import org.pyjjs.scheduler.core.api.impl.actors.common.ActorStateInteraction
 import org.pyjjs.scheduler.core.api.impl.actors.common.StateOrientedActor
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.Message
+import kotlin.reflect.KClass
 
 abstract class BehaviourBasedActor<T : ActorState>() : StateOrientedActor<T>() {
 
-    private val behaviours = Maps.newHashMap<Class<out Message>, Behaviour<T, out Message>>()
+    private val behaviours = Maps.newHashMap<KClass<out Message>, Behaviour<T, out Message>>()
 
     protected fun <B : Behaviour<T, out Message>> addBehaviour(behaviourClass: Class<B>) {
         val behaviour = behaviourClass.newInstance()
@@ -45,6 +46,6 @@ abstract class BehaviourBasedActor<T : ActorState>() : StateOrientedActor<T>() {
                 }
     }
 
-    private fun isAppropriateBehaviour(messageType: Class<out Message>, someObject: Message)
-            = messageType.isAssignableFrom(someObject.javaClass)
+    private fun isAppropriateBehaviour(messageType: KClass<out Message>, someObject: Message)
+            = messageType.java.isAssignableFrom(someObject.javaClass)
 }

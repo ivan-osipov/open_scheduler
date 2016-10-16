@@ -3,6 +3,7 @@ package org.pyjjs.scheduler.core.api.impl.actors.resource.behaviours
 import org.pyjjs.scheduler.core.api.impl.actors.common.behaviours.Behaviour
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceInitMessage
 import org.pyjjs.scheduler.core.api.impl.actors.resource.ResourceActorState
+import kotlin.reflect.KClass
 
 class ResourceInitBehaviour : Behaviour<ResourceActorState, ResourceInitMessage>() {
 
@@ -14,8 +15,8 @@ class ResourceInitBehaviour : Behaviour<ResourceActorState, ResourceInitMessage>
         saveActorState(resourceActorState)
     }
 
-    override fun processMessage(): Class<ResourceInitMessage> {
-        return ResourceInitMessage::class.java
+    override fun processMessage(): KClass<ResourceInitMessage> {
+        return ResourceInitMessage::class
     }
 
 }

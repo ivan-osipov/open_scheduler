@@ -2,6 +2,7 @@ package org.pyjjs.scheduler.core.api.impl.actors.task.behaviours
 
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.RejectionReason
 import org.pyjjs.scheduler.core.api.impl.actors.common.messages.ResourceHasNotPlacementMessage
+import kotlin.reflect.KClass
 
 class ResourceHasNotPlacementBehaviour: TaskBehaviour<ResourceHasNotPlacementMessage>() {
     override fun perform(message: ResourceHasNotPlacementMessage) {
@@ -15,8 +16,8 @@ class ResourceHasNotPlacementBehaviour: TaskBehaviour<ResourceHasNotPlacementMes
         saveActorState(actorState)
     }
 
-    override fun processMessage(): Class<out ResourceHasNotPlacementMessage> {
-        return ResourceHasNotPlacementMessage::class.java
+    override fun processMessage(): KClass<out ResourceHasNotPlacementMessage> {
+        return ResourceHasNotPlacementMessage::class
     }
 
 }
