@@ -19,7 +19,7 @@ class TaskSupervisor : BehaviourBasedActor<TaskSupervisorState>() {
     }
 
     private fun fillBehaviours() {
-        addBehaviour(CreateTaskBehaviour::class.java)
-        addBehaviour(ResourceAppearedSupervisorBehaviour::class.java)
+        addBehaviour(CreateTaskBehaviour::class)
+        addBehaviour(ResourceAppearedSupervisorBehaviour::class)
     }
 }

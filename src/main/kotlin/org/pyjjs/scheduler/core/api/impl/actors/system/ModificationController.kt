@@ -17,6 +17,6 @@ class ModificationController(taskSupervisor: ActorRef, resourceSupervisor: Actor
     }
 
     private fun fillBehaviours() {
-        addBehaviour(DataSourceChangeBehaviour::class.java)
+        addBehaviour(DataSourceChangeBehaviour::class)
     }
 }

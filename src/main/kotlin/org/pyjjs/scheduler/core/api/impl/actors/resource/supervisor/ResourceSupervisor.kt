@@ -16,6 +16,6 @@ class ResourceSupervisor : BehaviourBasedActor<ResourceSupervisorState>() {
     }
 
     private fun fillBehaviours() {
-        addBehaviour(CreateResourceBehaviour::class.java)
+        addBehaviour(CreateResourceBehaviour::class)
     }
 }

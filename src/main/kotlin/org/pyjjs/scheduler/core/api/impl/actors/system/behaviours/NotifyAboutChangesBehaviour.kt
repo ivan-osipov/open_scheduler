@@ -24,7 +24,7 @@ class NotifyAboutChangesBehaviour: Behaviour<SchedulingControllerState, CheckNew
 
     private fun allowMostDiscontentedActorToFindAlternatives(actorState: SchedulingControllerState) {
         if (!actorState.discontentsByTaskActors.isEmpty()) {
-            val mostDiscontentedActor = actorState.discontentsByTaskActors.maxBy { it.value }!!.key
+            val mostDiscontentedActor = actorState.discontentsByTaskActors.minBy { it.value }!!.key
             send(mostDiscontentedActor, FindBetterMessage(actorRef))
         }
     }

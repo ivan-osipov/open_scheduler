@@ -11,8 +11,8 @@ abstract class BehaviourBasedActor<T : ActorState>() : StateOrientedActor<T>() {
 
     private val behaviours = Maps.newHashMap<KClass<out Message>, Behaviour<T, out Message>>()
 
-    protected fun <B : Behaviour<T, out Message>> addBehaviour(behaviourClass: Class<B>) {
-        val behaviour = behaviourClass.newInstance()
+    protected fun <B : Behaviour<T, out Message>> addBehaviour(behaviourClass: KClass<B>) {
+        val behaviour = behaviourClass.java.newInstance()
         addBehaviour(behaviour)
     }
 

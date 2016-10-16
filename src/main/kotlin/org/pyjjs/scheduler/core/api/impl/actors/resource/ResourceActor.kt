@@ -19,7 +19,7 @@ class ResourceActor(source: Resource) : BehaviourBasedActor<ResourceActorState>(
     }
 
     private fun fillBehaviours() {
-        addBehaviour(FindPlacementBehaviour::class.java)
-        addBehaviour(OfferAcceptedBehaviour::class.java)
+        addBehaviour(FindPlacementBehaviour::class)
+        addBehaviour(OfferAcceptedBehaviour::class)
     }
 }

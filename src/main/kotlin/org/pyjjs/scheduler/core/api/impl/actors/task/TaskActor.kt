@@ -18,12 +18,13 @@ class TaskActor(task: Task) : BehaviourBasedActor<TaskActorState>() {
     }
 
     private fun fillBehaviours() {
-        addBehaviour(ResourceAppearedBehaviour::class.java)
-        addBehaviour(OfferStoreBehaviour::class.java)
-        addBehaviour(OffersCheckBehaviour::class.java)
-        addBehaviour(ResourceHasPlacementBehaviour::class.java)
-        addBehaviour(ResourceHasNotPlacementBehaviour::class.java)
-        addBehaviour(PlacementReservedBehavior::class.java)
-        addBehaviour(OfferIsNotRelevantBehaviour::class.java)
+        addBehaviour(ResourceAppearedBehaviour::class)
+        addBehaviour(OfferStoreBehaviour::class)
+        addBehaviour(OffersCheckBehaviour::class)
+        addBehaviour(ResourceHasPlacementBehaviour::class)
+        addBehaviour(ResourceHasNotPlacementBehaviour::class)
+        addBehaviour(PlacementReservedBehavior::class)
+        addBehaviour(OfferIsNotRelevantBehaviour::class)
+        //todo add here behav for proact protocol
     }
 }

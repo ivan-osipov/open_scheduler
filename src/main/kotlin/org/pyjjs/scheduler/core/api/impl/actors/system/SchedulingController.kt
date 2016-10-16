@@ -21,8 +21,8 @@ class SchedulingController(listener: SchedulingListener, registryOfStrategies: R
     }
 
     private fun fillBehaviours() {
-        addBehaviour(GotNewChangesBehaviour::class.java)
-        addBehaviour(NotifyAboutChangesBehaviour::class.java)
-        addBehaviour(TaskAppearedBehaviour::class.java)
+        addBehaviour(GotNewChangesBehaviour::class)
+        addBehaviour(NotifyAboutChangesBehaviour::class)
+        addBehaviour(TaskAppearedBehaviour::class)
     }
 }

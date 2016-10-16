@@ -56,7 +56,7 @@ class GotNewChangesBehaviour : Behaviour<SchedulingControllerState, PlanUpdatedM
         if (resourceUsage != null) {
             context.put(PROPOSED_LEAD_TIME, resourceUsage.timePart.end)
         }
-        actorState.discontentsByTaskActors[sender] = Math.abs(taskObjectiveFunction.calculate(task, context))
+        actorState.discontentsByTaskActors[sender] = taskObjectiveFunction.calculate(task, context)
     }
 
     override fun processMessage(): KClass<PlanUpdatedMessage> {
