@@ -5,14 +5,14 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 
 buildscript {
-    ext.kotlin_version = '1.0.4'
+    ext.kotlin_version = '1.1.2-2'
 
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.2-2"
     }
 }
 
@@ -30,7 +30,7 @@ task fatJar(type: Jar) {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.2-2"
 
     compile 'com.typesafe.akka:akka-actor_2.11:2.4.2'
 
