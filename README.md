@@ -1,19 +1,19 @@
 OpenScheduler
 ====
-Hi! If you are looking at the moment scheduler with
+Hi! If you are looking for scheduler with
 very simple API, then you found him.
 
-This scheduler based on multi-agent technologies. The implementation based on Akka.
+This scheduler is based on multi-agent technologies. The implementation based on Akka.
 
-This scheduler define two simple entity types:
+This scheduler defines two simple entity types:
 * Resource
 * Task
 
-Firstly, do you need to create Scheduler. It is simple:
+Firstly, you need to create Scheduler. It is simple:
 ``` java
 Scheduler scheduler = SchedulerFactory.get().createScheduler();
 ```
-Secondly, do you need to feel data source; You should be create Resources and Tasks, as in example:
+Secondly, you need to feel a data source; You should create Resources and Tasks, look the example below:
 ``` java
 Resource resource = new Resource();
 Task task = new Task();

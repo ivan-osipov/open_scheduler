@@ -3,10 +3,8 @@ package org.pyjjs.scheduler.core
 import org.junit.After
 import org.junit.Before
 import org.pyjjs.scheduler.core.api.*
-import org.pyjjs.scheduler.core.api.impl.MicroeconomicsSchedulerFactory
+import org.pyjjs.scheduler.core.api.impl.MultiAgentSchedulerFactory
 import org.pyjjs.scheduler.core.api.impl.changes.PlanChange
-import org.pyjjs.scheduler.core.data.HashSetDataSourceImpl
-import org.pyjjs.scheduler.core.data.ObservableDataSource
 import org.pyjjs.scheduler.core.model.IdentifiableObject
 import java.util.*
 import java.util.concurrent.Semaphore
@@ -50,7 +48,7 @@ abstract class BaseSchedulerTest: PlanRepresentative.StablePlanListener {
     }
 
     private fun createScheduler(): Scheduler {
-        return MicroeconomicsSchedulerFactory().createScheduler()
+        return MultiAgentSchedulerFactory().createScheduler()
     }
 
     abstract fun assertPlan(plan: Plan, lastAppliedChanges: SortedSet<PlanChange>)

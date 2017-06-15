@@ -27,7 +27,9 @@ class PlacementReservedMessage(resourceRef: ActorRef, var offerId: UUID): Messag
 class OfferIsNotRelevantMessage(resourceRef: ActorRef, var offerId: UUID): Message(resourceRef)
 
 //DTO
-data class TaskDescriptor @JvmOverloads constructor(val laborContent: Double,
+data class TaskDescriptor @JvmOverloads constructor(
+                     val name: String = "defaultName",
+                     val laborContent: Double,
                      val minCapacity: Double,
                      val maxCapacity: Double,
                      val minDuration: Long,
