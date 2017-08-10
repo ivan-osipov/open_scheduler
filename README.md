@@ -1,6 +1,6 @@
 OpenScheduler
 ====
-Hi! If you are looking for scheduler with
+Hi! If you are looking for a scheduler with
 very simple API, then you found him.
 
 This scheduler is based on multi-agent technologies. The implementation based on Akka.
